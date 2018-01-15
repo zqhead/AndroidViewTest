@@ -2,8 +2,12 @@ package com.csii.androidviewtest.TestAndPractice;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -11,6 +15,8 @@ import android.view.View;
  */
 
 public class TestCanvasAndPaint extends View {
+    Paint mPaint = new Paint();
+    int mCounter;
 
     public TestCanvasAndPaint(Context context) {
         super(context);
@@ -18,10 +24,11 @@ public class TestCanvasAndPaint extends View {
 
     public TestCanvasAndPaint(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initData();
     }
 
-    public TestCanvasAndPaint(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    private void initData () {
+        mPaint.setColor(Color.BLUE);
     }
 
     @Override
@@ -32,5 +39,26 @@ public class TestCanvasAndPaint extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        canvas.drawRoundRect(0, 0 , getWidth(), getHeight(), getWidth() / 10, getHeight() / 10, mPaint);
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText(""+mCounter, 100, 100, mPaint);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mPaint.setColor(Color.DKGRAY);
+                mCounter++;
+                postInvalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                mPaint.setColor(Color.BLUE);
+                postInvalidate();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }
