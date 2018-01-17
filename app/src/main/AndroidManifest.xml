@@ -16,7 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".CanvasAndPaintTestOneActivity"></activity>
+        <activity
+            android:name=".CanvasAndPaintTestOneActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".BasicActivity">
+        </activity>
     </application>
 
 </manifest>

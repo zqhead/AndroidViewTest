@@ -6,16 +6,23 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.csii.androidviewtest.R;
 
 /**
  * Created by zqhead on 2018/1/15.
  */
 
 public class TestCanvasAndPaint extends View {
-    Paint mPaint = new Paint();
+    private static final String TAG = "TestCanvasAndPaint";
+    Paint normalPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    Paint pressPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    Paint mPaint;
     int mCounter;
 
     public TestCanvasAndPaint(Context context) {
@@ -28,37 +35,56 @@ public class TestCanvasAndPaint extends View {
     }
 
     private void initData () {
-        mPaint.setColor(Color.BLUE);
+        Log.i(TAG, "initData: ");
+        normalPaint.setColor(Color.BLUE);
+        pressPaint.setAlpha(32);
+        pressPaint.setColor(getResources().getColor(R.color.presscolor));
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(30);
+        mPaint = normalPaint;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        Log.i(TAG, "onSizeChanged: ");
+        super.onSizeChanged(w, h, oldw, oldh);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.i(TAG, "onMeasure: ");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.i(TAG, "onDraw: ");
         super.onDraw(canvas);
         canvas.drawRoundRect(0, 0 , getWidth(), getHeight(), getWidth() / 10, getHeight() / 10, mPaint);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText(""+mCounter, 100, 100, mPaint);
+
+        canvas.drawText("" + mCounter, 100, 100, textPaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mPaint.setColor(Color.DKGRAY);
-                mCounter++;
+                mPaint = pressPaint;
                 postInvalidate();
+                mCounter++;
                 break;
             case MotionEvent.ACTION_UP:
-                mPaint.setColor(Color.BLUE);
+            case MotionEvent.ACTION_CANCEL:
+                Log.i(TAG, "onTouchEvent: " + event.getAction());
+                mPaint = normalPaint;
                 postInvalidate();
                 break;
             default:
                 break;
         }
+
         return true;
     }
+
+
 }
