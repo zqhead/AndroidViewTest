@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CanvasAndPaintTestOneActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:name=".CanvasAndPaintTestOneActivity"></activity>
+            <!--android:configChanges="orientation|keyboardHidden|screenSize"/>-->
         <activity android:name=".BasicActivity">
         </activity>
     </application>

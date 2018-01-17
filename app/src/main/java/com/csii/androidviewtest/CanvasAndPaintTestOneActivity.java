@@ -5,12 +5,18 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.csii.androidviewtest.CustomView.CellEditText;
 import com.csii.androidviewtest.TestAndPractice.TestCanvasAndPaint;
 
-public class CanvasAndPaintTestOneActivity extends AppCompatActivity {
+public class CanvasAndPaintTestOneActivity extends BasicActivity implements View.OnClickListener{
     private static final String TAG = "CanvasAndPaintTestOneAc";
     public TestCanvasAndPaint test1;
+    private CellEditText cell;
+    private Button mAddBtn;
+    private Button mDelBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +25,26 @@ public class CanvasAndPaintTestOneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_canvas_and_paint_test_one);
         test1 = (TestCanvasAndPaint) findViewById(R.id.test_1);
 
+        cell = (CellEditText) findViewById(R.id.Edt_cell);
+        cell.setMaxLength(7);
+
+        mAddBtn = (Button) findViewById(R.id.btn_add);
+        mAddBtn.setOnClickListener(this);
+        mDelBtn = (Button) findViewById(R.id.btn_delete);
+        mDelBtn.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_add:
+                cell.setTextLength(cell.getTextLength() + 1);
+                break;
+            case R.id.btn_delete:
+                cell.setTextLength(cell.getTextLength() - 1);
+                break;
+        }
     }
 
     @Override
@@ -58,14 +84,16 @@ public class CanvasAndPaintTestOneActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+    public void onSaveInstanceState(Bundle outState) {
         Log.i(TAG, "onSaveInstanceState: ");
-        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("textLength", cell.getTextLength());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         Log.i(TAG, "onRestoreInstanceState: ");
+        cell.setTextLength(savedInstanceState.getInt("textLength"));
         super.onRestoreInstanceState(savedInstanceState);
     }
 }

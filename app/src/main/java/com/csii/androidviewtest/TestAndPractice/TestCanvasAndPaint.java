@@ -57,6 +57,12 @@ public class TestCanvasAndPaint extends View {
     }
 
     @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        Log.i(TAG, "onLayout: ");
+        super.onLayout(changed, left, top, right, bottom);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         Log.i(TAG, "onDraw: ");
         super.onDraw(canvas);
@@ -82,9 +88,14 @@ public class TestCanvasAndPaint extends View {
             default:
                 break;
         }
-
         return true;
     }
 
+    public int getCounter(){
+        return mCounter;
+    }
 
+    public void setCounter(int sum) {
+        mCounter = sum;
+    }
 }
