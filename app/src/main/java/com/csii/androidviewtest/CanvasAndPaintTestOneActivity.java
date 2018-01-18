@@ -1,9 +1,12 @@
 package com.csii.androidviewtest;
 
 import android.content.res.Configuration;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ExpandedMenuView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,14 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
     private CellEditText cell;
     private Button mAddBtn;
     private Button mDelBtn;
+
+    private Handler mhandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            cell.setTextLength(msg.arg1);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +50,33 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_add:
-                cell.setTextLength(cell.getTextLength() + 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(int i = 1; i <= 7; i++) {
+                            Message msg = new Message();
+                            msg.arg1 = i;
+                            mhandler.sendMessage(msg);
+                            try{
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                            }
+                        }
+                    }
+                }).start();
                 break;
             case R.id.btn_delete:
+                mhandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        cell.setTextLength(cell.getTextLength() - 1);
+                    }
+                });
                 cell.setTextLength(cell.getTextLength() - 1);
                 break;
         }
     }
+
 
     @Override
     protected void onDestroy() {
