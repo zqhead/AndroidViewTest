@@ -21,11 +21,23 @@
         android:layout_height="1dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="171dp"
+        android:layout_marginTop="356dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/Edt_cell"/>
+        android:id="@+id/Edt_cell"
+        />
+
+    <com.csii.androidviewtest.TestAndPractice.TestView
+        android:layout_width="82dp"
+        android:layout_height="86dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"/>
 
     <Button
         android:id="@+id/btn_add"
@@ -56,6 +68,17 @@
         android:id="@+id/guideline"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"/>
+
+    <com.csii.androidviewtest.CustomView.LoopView
+        android:id="@+id/view_loop"
+        android:layout_width="197dp"
+        android:layout_height="205dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="104dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 
 </android.support.constraint.ConstraintLayout>

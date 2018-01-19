@@ -12,7 +12,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.csii.androidviewtest.CustomView.CellEditText;
+import com.csii.androidviewtest.CustomView.LoopView;
+import com.csii.androidviewtest.CustomView.LoopView.LoopData;
 import com.csii.androidviewtest.TestAndPractice.TestCanvasAndPaint;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CanvasAndPaintTestOneActivity extends BasicActivity implements View.OnClickListener{
     private static final String TAG = "CanvasAndPaintTestOneAc";
@@ -20,6 +25,12 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
     private CellEditText cell;
     private Button mAddBtn;
     private Button mDelBtn;
+
+    private LoopView mLoopView;
+    private List<LoopData> list = new ArrayList<>();
+
+    private String[] mNameList = {"zq1", "zq2","zq3","zq4","zq5","zq6","zq7","zq8"};
+    private int[] mDataList = {200, 300, 500, 100, 350, 600, 200, 50};
 
     private Handler mhandler = new Handler(){
         @Override
@@ -44,6 +55,12 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
         mDelBtn = (Button) findViewById(R.id.btn_delete);
         mDelBtn.setOnClickListener(this);
 
+        mLoopView = (LoopView) findViewById(R.id.view_loop);
+        for (int i = 0; i < 8; i++) {
+            LoopView.LoopData data = mLoopView.new LoopData(mNameList[i], mDataList[i]);
+            list.add(data);
+        }
+        mLoopView.initLoopData(list);
     }
 
     @Override
