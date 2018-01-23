@@ -9,6 +9,7 @@ import android.widget.Button;
 public class MainActivity extends BasicActivity implements View.OnClickListener {
     private Button start1;
     private Button start2;
+    private Button startPath1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,9 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         start1.setOnClickListener(this);
         start2 = (Button)findViewById(R.id.btn_start_two);
         start2.setOnClickListener(this);
+        startPath1 = (Button)findViewById(R.id.btn_start_path1);
+        startPath1.setOnClickListener(this);
+
     }
 
     @Override
@@ -28,6 +32,9 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 break;
             case  R.id.btn_start_two:
                 startActivity(new Intent(MainActivity.this, CanvasAndPaintTestTwoActivity.class));
+                break;
+            case R.id.btn_start_path1:
+                startActivity(new Intent(MainActivity.this, PathTestOneActivity.class));
             default:
                 break;
         }

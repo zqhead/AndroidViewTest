@@ -63,6 +63,7 @@ public class TestView extends View {
         mPaint.setAlpha(255);
         canvas.drawArc(rectF, 240, 84, true, mPaint);
 
+        //如果在setcolor时使用的是RGB的颜色，则alpha会被默认设置为00
         mPaint.setColor(0x00AA33);
         mPaint.setAlpha(255);
         canvas.drawArc(rectF, 324, 36, true, mPaint);

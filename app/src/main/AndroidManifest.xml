@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".CanvasAndPaintTestTwoActivity">
         </activity>
+        <activity android:name=".PathTestOneActivity">
+        </activity>
     </application>
 
 </manifest>

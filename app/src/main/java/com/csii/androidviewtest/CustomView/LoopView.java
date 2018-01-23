@@ -100,11 +100,12 @@ public class LoopView extends View {
             total += loop.dataValue;
         }
         Log.i(TAG, "initLoopData:total "+total);
-        for(LoopData loop:list){
-            loop.percentage = (float)loop.dataValue /(float) total;
-            loop.angle = loop.percentage * 360.0f;
-            dataList.add(loop);
-            Log.i("LoopView", "initLoopData: dataList name" + loop.dataName + " " +loop.dataValue + " "+ loop.percentage + " "+ loop.angle);
+        for(LoopData loopData:list){
+            loopData.percentage = (float)loopData.dataValue /(float) total;
+            loopData.angle = loopData.percentage * 360.0f;
+            dataList.add(loopData);
+
+            Log.i("LoopView", "initLoopData: dataList name" + loopData.dataName + " " +loopData.dataValue + " "+ loopData.percentage + " "+ loopData.angle);
         }
         Log.i(TAG, "initLoopData:dataList.size "+dataList.size());
         startAngle = 0.0f;
