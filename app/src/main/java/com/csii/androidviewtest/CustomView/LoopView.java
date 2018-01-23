@@ -111,6 +111,7 @@ public class LoopView extends View {
         postInvalidate();
     }
 
+    //内部类用于初始化数据
     public class LoopData{
         public String dataName;
         public int dataValue;

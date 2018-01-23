@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,10 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CanvasAndPaintTestOneActivity"></activity>
-            <!--android:configChanges="orientation|keyboardHidden|screenSize"/>-->
+        <activity android:name=".CanvasAndPaintTestOneActivity"/>
+        <!-- android:configChanges="orientation|keyboardHidden|screenSize"/> -->
         <activity android:name=".BasicActivity">
+        </activity>
+        <activity android:name=".CanvasAndPaintTestTwoActivity">
         </activity>
     </application>
 

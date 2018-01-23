@@ -2,6 +2,7 @@ package com.csii.androidviewtest;
 
 import android.content.res.Configuration;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,10 +36,16 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
     private Handler mhandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            Log.i(TAG, "run:1 ");
             super.handleMessage(msg);
-            cell.setTextLength(msg.arg1);
+            if(msg.what == 2){
+                cell.setTextLength(msg.arg1);
+            } else if (msg.what == 1){
+                cell.setTextLength(cell.getTextLength() - 1);
+            }
         }
     };
+    public Handler mHandler1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,9 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
 
         mLoopView = (LoopView) findViewById(R.id.view_loop);
         for (int i = 0; i < 8; i++) {
+            /**
+             * 内部类的实例化 类.内部类 变量名 = 类.new 内部类();
+             * */
             LoopView.LoopData data = mLoopView.new LoopData(mNameList[i], mDataList[i]);
             list.add(data);
         }
@@ -70,15 +80,34 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Looper.prepare();
+                        mHandler1 = new Handler(){
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                Log.i(TAG, "run:2 ");
+                                    if (msg.what == 0){
+                                    Message msg1 = new Message();
+                                    msg1.what = 1;
+                                    msg1.arg1 = -1;
+                                    mhandler.sendMessage(msg1);
+                                }
+                            }
+                        };
+                        Log.i(TAG, "run:3 ");
                         for(int i = 1; i <= 7; i++) {
                             Message msg = new Message();
                             msg.arg1 = i;
+                            msg.what = 2;
                             mhandler.sendMessage(msg);
                             try{
                                 Thread.sleep(1000);
                             } catch (InterruptedException e) {
                             }
                         }
+                        //loop里面是一个死循环，所以子线程中的操作需要放在他后面执行
+                        Looper.loop();
+
                     }
                 }).start();
                 break;
@@ -86,10 +115,14 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
                 mhandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        cell.setTextLength(cell.getTextLength() - 1);
+                        Log.i(TAG, "run:4 ");
+                        Message msg2 = new Message();
+                        msg2.what = 0;
+                        mHandler1.sendMessage(msg2);
+                        //cell.setTextLength(cell.getTextLength() - 1);
                     }
                 });
-                cell.setTextLength(cell.getTextLength() - 1);
+                //cell.setTextLength(cell.getTextLength() - 1);
                 break;
         }
     }
