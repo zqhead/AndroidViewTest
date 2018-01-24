@@ -80,11 +80,13 @@ public class LoopView extends View {
             index++;
         }
 
+        //若无数据则用整圈代替
         if (dataList.size() == 0) {
             mPaint.setColor(fillColor[0]);
             canvas.drawCircle(0, 0, mWidth / 2, mPaint);
         }
 
+        //白色进行覆盖
         mPaint.setColor(Color.WHITE);
         canvas.drawCircle(0, 0, mWidth * 0.3f, mPaint);
     }

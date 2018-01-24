@@ -19,11 +19,13 @@
         </activity>
         <activity android:name=".CanvasAndPaintTestOneActivity"/>
         <!-- android:configChanges="orientation|keyboardHidden|screenSize"/> -->
-        <activity android:name=".BasicActivity">
+        <activity android:name=".BaseActivity">
         </activity>
         <activity android:name=".CanvasAndPaintTestTwoActivity">
         </activity>
         <activity android:name=".PathTestOneActivity">
+        </activity>
+        <activity android:name=".BezierTestActivity">
         </activity>
     </application>
 

@@ -1,15 +1,15 @@
 package com.csii.androidviewtest;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends BasicActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button start1;
     private Button start2;
     private Button startPath1;
+    private Button startbezier1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,8 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
         start2.setOnClickListener(this);
         startPath1 = (Button)findViewById(R.id.btn_start_path1);
         startPath1.setOnClickListener(this);
+        startbezier1 = (Button)findViewById(R.id.btn_start_bezier1);
+        startbezier1.setOnClickListener(this);
 
     }
 
@@ -35,6 +37,10 @@ public class MainActivity extends BasicActivity implements View.OnClickListener 
                 break;
             case R.id.btn_start_path1:
                 startActivity(new Intent(MainActivity.this, PathTestOneActivity.class));
+                break;
+            case R.id.btn_start_bezier1:
+                startActivity(new Intent(MainActivity.this, BezierTestActivity.class));
+                break;
             default:
                 break;
         }

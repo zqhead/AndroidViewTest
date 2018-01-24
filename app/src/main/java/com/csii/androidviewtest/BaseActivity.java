@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.csii.androidviewtest.Util.ActivityCollector;
 
-public class BasicActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,10 +4,7 @@ import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.ExpandedMenuView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +17,7 @@ import com.csii.androidviewtest.TestAndPractice.TestCanvasAndPaint;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CanvasAndPaintTestOneActivity extends BasicActivity implements View.OnClickListener{
+public class CanvasAndPaintTestOneActivity extends BaseActivity implements View.OnClickListener{
     private static final String TAG = "CanvasAndPaintTestOneAc";
     public TestCanvasAndPaint test1;
     private CellEditText cell;
@@ -80,7 +77,7 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Looper.prepare();
+                        Looper.prepare();//子线程使用handler，需要先用looper.prepare()来为子线程实例化一个looper对象
                         mHandler1 = new Handler(){
                             @Override
                             public void handleMessage(Message msg) {
@@ -105,7 +102,7 @@ public class CanvasAndPaintTestOneActivity extends BasicActivity implements View
                             } catch (InterruptedException e) {
                             }
                         }
-                        //loop里面是一个死循环，所以子线程中的操作需要放在他后面执行
+                        //loop里面是一个死循环，所以子线程中的操作需要放在它前面执行
                         Looper.loop();
 
                     }

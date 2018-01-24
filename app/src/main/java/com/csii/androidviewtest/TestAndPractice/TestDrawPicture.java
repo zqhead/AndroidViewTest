@@ -38,7 +38,7 @@ public class TestDrawPicture extends View {
     }
 
     private void recording(){
-        Canvas canvas = mPicture.beginRecording(100, 100);//个人理解，这里的width和height只是提供一个画布的大小的依据，为以后缩放提供基数，二不会影响超出范围的画布操作的执行和显示
+        Canvas canvas = mPicture.beginRecording(100, 100);//个人理解，这里的width和height只是提供一个画布的大小的依据，为以后缩放提供基数，不会影响超出范围的画布操作的执行和显示
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color. BLUE);

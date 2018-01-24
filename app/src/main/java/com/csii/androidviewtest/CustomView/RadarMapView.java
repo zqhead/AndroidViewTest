@@ -10,6 +10,7 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.csii.androidviewtest.Util.AngleUtil;
 import com.csii.androidviewtest.Util.DimensionUtil;
 
 /**
@@ -21,11 +22,11 @@ public class RadarMapView extends View {
     /**
      * 各项数据名称
      * */
-    private String[] texts = {"a", "b", "c","d", "e", "f", "g"};
+    private String[] texts = {"a", "b", "c","d", "e", "f"};
     /**
      * 雷达图数据组
      * */
-    private int[] values = {100 ,30 ,50 ,90 ,20 ,60, 50};
+    private int[] values = {100 ,30 ,50 ,90 ,20, 50};
     /**
      * 数据最大值
      * */
@@ -33,7 +34,7 @@ public class RadarMapView extends View {
     /**
      * 雷达图维度（即有多少个数据项）
      * */
-    private int mDimension = 7;
+    private int mDimension = 6;
      /**
       * 雷达图刻度（即内部套多少个多边形）
       * */
@@ -42,6 +43,10 @@ public class RadarMapView extends View {
      * 维度之间的角度（弧度制）
      * */
     private float mAngle = (float)(Math.PI * 2 / mDimension);
+    /**
+     * 初始角度
+     * */
+    private float startAngle = AngleUtil.angle2Arc(-90);
     /*
      * 雷达图的半径
      * */
@@ -132,13 +137,17 @@ public class RadarMapView extends View {
     private void drawRadar(Canvas canvas) {
         Path path = new Path();
         for (int i = 1; i <= mScale ; i++) {
-            path.reset();//reset()会清空path已有的直线和曲线，但是会保留fillType的设置
+            path.reset();//reset()会清空path已有的直线和曲线以及位置移动，但是会保留fillType的设置
             float cRadius = (radius * i / mScale);
-            path.moveTo(cRadius, 0);
-            for(int j = 1; j < mDimension; j++) {
-                float x = (float)(cRadius * Math.cos(mAngle * j));
-                float y = (float)(cRadius * Math.sin(mAngle * j));
-                path.lineTo(x, y);
+
+            for(int j = 0; j < mDimension; j++) {
+                float x = (float)(cRadius * Math.cos(startAngle + mAngle * j));
+                float y = (float)(cRadius * Math.sin(startAngle + mAngle * j));
+                if (j == 0) {
+                    path.moveTo(x, y);
+                } else {
+                    path.lineTo(x, y);
+                }
             }
             path.close();
             canvas.drawPath(path, radarPaint);
@@ -149,8 +158,8 @@ public class RadarMapView extends View {
         Path path = new Path();
         for(int j = 0; j < mDimension; j++) {
             path.reset();
-            float x = (float)(radius * Math.cos(mAngle * j));
-            float y = (float)(radius * Math.sin(mAngle * j));
+            float x = (float)(radius * Math.cos(startAngle + mAngle * j));
+            float y = (float)(radius * Math.sin(startAngle + mAngle * j));
             path.lineTo(x, y);
             canvas.drawPath(path, radarPaint);
         }
@@ -161,8 +170,8 @@ public class RadarMapView extends View {
         valuePaint.setAlpha(255);
         for (int i = 0; i < mDimension; i++) {
             float r = ((float) values[i] / (float) maxValue) * radius;
-            float x = (float)(r * Math.cos(mAngle * i));
-            float y = (float)(r * Math.sin(mAngle * i));
+            float x = (float)(r * Math.cos(startAngle + mAngle * i));
+            float y = (float)(r * Math.sin(startAngle + mAngle * i));
             if (i == 0) {
                 path.moveTo(x, y);
             } else {
@@ -185,8 +194,8 @@ public class RadarMapView extends View {
     private void drawTexts(Canvas canvas) {
         for (int i = 0; i < mDimension; i++) {
             float r = radius;
-            float x = (float)(r * Math.cos(mAngle * i));
-            float y = (float)(r * Math.sin(mAngle * i));
+            float x = (float)(r * Math.cos(startAngle + mAngle * i));
+            float y = (float)(r * Math.sin(startAngle + mAngle * i));
             canvas.drawText(texts[i], x, y, valuePaint);
         }
     }
