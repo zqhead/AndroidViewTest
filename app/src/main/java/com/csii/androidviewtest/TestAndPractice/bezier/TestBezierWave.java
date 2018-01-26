@@ -118,7 +118,7 @@ public class TestBezierWave extends View {
         valueAnimator.ofFloat(0, -mWidth);//设置Value动画执行的value范围
         valueAnimator.setDuration(1000);//设置持续时间 单位毫秒
         valueAnimator.setRepeatCount(ValueAnimator.INFINITE);//设置重复次数 范围[0,ValueAnimator.INFINITE] ValueAnimator.INFINITE表示一致重复
-        //valueAnimator.setRepeatMode(ValueAnimator.RESTART);//设置重复的方式 可选值 ValueAnimator.RESTART（重新执行上一次的动画） ValueAnimator.REVERSE（反向执行前一次的动画）
+        valueAnimator.setRepeatMode(ValueAnimator.RESTART);//设置重复的方式 可选值 ValueAnimator.RESTART（重新执行上一次的动画） ValueAnimator.REVERSE（反向执行前一次的动画）
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//设置动画执行过程的监听器
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
