@@ -86,4 +86,17 @@
         android:orientation="vertical"
         />
 
+    <Button
+        android:id="@+id/btn_open_bezier2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_start_bezier1"/>
+
 </android.support.constraint.ConstraintLayout>

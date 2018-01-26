@@ -1,4 +1,4 @@
-package com.csii.androidviewtest.TestAndPractice;
+package com.csii.androidviewtest.TestAndPractice.bezier;
 
 import android.content.Context;
 import android.graphics.Canvas;

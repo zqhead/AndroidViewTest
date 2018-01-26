@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.csii.androidviewtest.BezierTestActivity">
 
-    <com.csii.androidviewtest.TestAndPractice.TestBezierCurve
+    <com.csii.androidviewtest.TestAndPractice.bezier.TestBezierCurve
         android:layout_width="358dp"
         android:layout_height="287dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,7 +18,7 @@
         android:id="@+id/testBezierCurve"
         />
 
-    <com.csii.androidviewtest.TestAndPractice.TestBezierCurveTwo
+    <com.csii.androidviewtest.TestAndPractice.bezier.TestBezierCurveTwo
         android:layout_width="259dp"
         android:layout_height="212dp"
         android:layout_marginBottom="8dp"

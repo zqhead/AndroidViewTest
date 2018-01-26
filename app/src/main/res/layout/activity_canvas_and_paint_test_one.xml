@@ -8,8 +8,8 @@
     tools:context="com.csii.androidviewtest.CanvasAndPaintTestOneActivity">
 
     <com.csii.androidviewtest.TestAndPractice.TestCanvasAndPaint
-        android:layout_width="51dp"
-        android:layout_height="36dp"
+        android:layout_width="87dp"
+        android:layout_height="61dp"
         android:id="@+id/test_1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
