@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".Activity.BezierTestWaveOneActivity">
         </activity>
+        <activity android:name=".Activity.BezierTestWaveTwoActivity">
+        </activity>
     </application>
 
 </manifest>

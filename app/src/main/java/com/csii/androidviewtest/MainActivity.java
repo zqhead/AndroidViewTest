@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.csii.androidviewtest.Activity.BezierTestWaveOneActivity;
+import com.csii.androidviewtest.Activity.BezierTestWaveTwoActivity;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button start1;
@@ -13,6 +14,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startPath1;
     private Button startbezier1;
     private Button startbezier2;
+    private Button startbezier3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startPath1.setOnClickListener(this);
         startbezier1 = (Button)findViewById(R.id.btn_start_bezier1);
         startbezier1.setOnClickListener(this);
-        startbezier1 = (Button)findViewById(R.id.btn_open_bezier2);
-        startbezier1.setOnClickListener(this);
+        startbezier2 = (Button)findViewById(R.id.btn_open_bezier2);
+        startbezier2.setOnClickListener(this);
+        startbezier3 = (Button)findViewById(R.id.btn_start_wave2);
+        startbezier3.setOnClickListener(this);
 
     }
 
@@ -49,6 +54,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_open_bezier2:
                 startActivity(new Intent(MainActivity.this, BezierTestWaveOneActivity.class));
                 break;
+            case R.id.btn_start_wave2:
+                startActivity(new Intent(MainActivity.this, BezierTestWaveTwoActivity.class));
+                break;
+
             default:
                 break;
         }

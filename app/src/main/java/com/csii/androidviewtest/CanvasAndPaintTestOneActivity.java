@@ -68,6 +68,8 @@ public class CanvasAndPaintTestOneActivity extends BaseActivity implements View.
             list.add(data);
         }
         mLoopView.initLoopData(list);
+
+        mLoopView.animate().scaleX(1).scaleY(1).setDuration(1000);
     }
 
     @Override
