@@ -1,5 +1,6 @@
 package com.csii.androidviewtest.TestAndPractice.bezier;
 
+import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -64,8 +65,8 @@ public class TestBezierWaveTwo extends View{
         maxHeight = mHeight / 8;
         peakHeight = mHeight / 16;
         currentHeight = startHeight;
-        leftWidth = mWidth / 16;
-        rightWidth = mWidth * 15 / 16;
+        leftWidth  = 0;
+        rightWidth = mWidth;
         currentWidth = leftWidth;
     }
 
@@ -98,20 +99,35 @@ public class TestBezierWaveTwo extends View{
         valueAnimator.start();
 
         ValueAnimator valueAnimator1 = ValueAnimator.ofInt(leftWidth, rightWidth);
-        valueAnimator1.setDuration(2000);
+        valueAnimator1.setDuration(4000);
         valueAnimator1.setRepeatCount(ValueAnimator.INFINITE);
         valueAnimator1.setRepeatMode(ValueAnimator.REVERSE);
         valueAnimator1.setInterpolator(new AccelerateDecelerateInterpolator());
         valueAnimator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                int width = (int) animation.getAnimatedValue();
-                currentWidth = width;
+                int x = (int) animation.getAnimatedValue();
+                currentWidth = x;
                 invalidate();
             }
         });
-        valueAnimator1.start();
+        valueAnimator.start();
 
+    }
+
+    //自定义typeEvaluator
+    private class waveEvaluator implements TypeEvaluator{
+        @Override
+        public Object evaluate(float fraction, Object startValue, Object endValue) {
+            PointF start = (PointF) startValue;
+            PointF end = (PointF) endValue;
+
+            int x = (int) (start.x + fraction * (end.x - start.x));
+            int y = (int) (start.y + fraction * (end.y - start.y));
+
+            return new PointF(x, y);
+
+        }
     }
 
 
