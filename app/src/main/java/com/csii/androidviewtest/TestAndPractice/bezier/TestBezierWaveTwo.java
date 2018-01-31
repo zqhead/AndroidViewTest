@@ -4,6 +4,7 @@ import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Interpolator;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -13,18 +14,42 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 /**
- * 贝塞尔曲线做升降波浪 动态随机晃动
+ * 贝塞尔曲线做升降波浪 动态随机晃动（动态随机晃动还未实现）
  * Created by zqhead on 2018/1/26.
  */
 
 public class TestBezierWaveTwo extends View{
+    /**
+     * 最大水位高度
+     * */
     private int maxHeight;
+    /**
+     * 最小水位高度
+     * */
     private int startHeight;
+    /**
+     * 控件高度
+     * */
     private int mHeight;
+    /**
+     * 控件宽度
+     * */
     private int mWidth;
+    /**
+     * 波峰高度
+     * */
     private int peakHeight;
+    /**
+     * 当前水位高度
+     * */
     private int currentHeight;
+    /**
+     * 当前波峰的位置
+     */
     private int currentWidth;
+    /**
+     * 持续时间
+     * */
     private int duration;
     private PointF controlP, endP;
     private int leftWidth, rightWidth;
@@ -75,7 +100,7 @@ public class TestBezierWaveTwo extends View{
         super.onDraw(canvas);
         Path path = new Path();
         path.moveTo(0, currentHeight);
-        path.quadTo(currentWidth, currentHeight - peakHeight, mWidth, currentHeight);
+        path.quadTo(currentWidth, currentHeight - peakHeight, mWidth, currentHeight);//二阶贝塞尔曲线来对水位的波峰进行构建
         path.lineTo(mWidth, mHeight);
         path.lineTo(0, mHeight);
         path.close();
@@ -83,6 +108,7 @@ public class TestBezierWaveTwo extends View{
     }
 
     public void doAnimator() {
+        //用动画来控制y轴 纵向的水位高度变化
         ValueAnimator valueAnimator = ValueAnimator.ofInt(startHeight, maxHeight);
         valueAnimator.setDuration(duration);
         valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -98,6 +124,7 @@ public class TestBezierWaveTwo extends View{
         });
         valueAnimator.start();
 
+        //用动画来控制x轴 横向的波峰的移动
         ValueAnimator valueAnimator1 = ValueAnimator.ofInt(leftWidth, rightWidth);
         valueAnimator1.setDuration(4000);
         valueAnimator1.setRepeatCount(ValueAnimator.INFINITE);
@@ -111,7 +138,7 @@ public class TestBezierWaveTwo extends View{
                 invalidate();
             }
         });
-        valueAnimator.start();
+        valueAnimator1.start();
 
     }
 
@@ -127,6 +154,13 @@ public class TestBezierWaveTwo extends View{
 
             return new PointF(x, y);
 
+        }
+    }
+
+    //自定义interpolator
+    class myInterpolator extends Interpolator{
+        public myInterpolator(int valueCount) {
+            super(valueCount);
         }
     }
 
