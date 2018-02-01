@@ -19,6 +19,7 @@ public class TestPathFillType extends View {
     private int mHeight;
 
     private Paint mPaint;
+    private int viewSize;
 
     public TestPathFillType(Context context) {
         super(context);
@@ -46,6 +47,7 @@ public class TestPathFillType extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
+        viewSize = Math.min(w, h);
     }
 
     @Override
@@ -62,24 +64,24 @@ public class TestPathFillType extends View {
         //用path的布尔操作画一个太极
 
         canvas.translate(mWidth / 2, mHeight / 2);
-        path.addCircle(0, 0, 200, Path.Direction.CW);
-        path1.addCircle(0, 100, 100, Path.Direction.CW);
-        path2.addCircle(0, -100, 100, Path.Direction.CW);
-        path3.addRect(-200, 200, 0, -200, Path.Direction.CW);
-        path4.addCircle(0, 100, 50, Path.Direction.CW);
-        path5.addCircle(0, -100, 50, Path.Direction.CW);
+        path.addCircle(0, 0, viewSize / 2, Path.Direction.CW);
+        path1.addCircle(0, viewSize / 4, viewSize / 4, Path.Direction.CW);
+        path2.addCircle(0, -viewSize / 4, viewSize / 4, Path.Direction.CW);
+        path3.addRect(-viewSize / 2, viewSize / 2, 0, -viewSize / 2, Path.Direction.CW);
+        path4.addCircle(0, viewSize / 4, viewSize / 16, Path.Direction.CW);
+        path5.addCircle(0, -viewSize / 4, viewSize / 16, Path.Direction.CW);
 
         path.op(path3, Path.Op.DIFFERENCE);//取除去path3后差集给path 为右半圆
-        path.op(path1, Path.Op.UNION);
+        path.op(path1, Path.Op.UNION);//取交集
         path.op(path2, Path.Op.DIFFERENCE);
-        path.op(path4, Path.Op.XOR);
+        path.op(path4, Path.Op.XOR);//取异或
         path.op(path5, Path.Op.UNION);
 
         canvas.drawPath(path, mPaint);
 
         //画圈
         mPaint.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(0, 0, 200, mPaint);
+        canvas.drawCircle(0, 0, viewSize, mPaint);
 
     }
 }

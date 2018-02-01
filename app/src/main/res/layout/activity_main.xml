@@ -113,4 +113,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_open_bezier2"/>
 
+    <Button
+        android:id="@+id/btn_open_test_pathmeasure"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:text="openPathMeasureTest"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/btn_start_path1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_start_path1"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".Activity.BezierTestWaveTwoActivity">
         </activity>
+        <activity android:name=".Activity.PathMeasureTestActivity">
+        </activity>
     </application>
 
 </manifest>

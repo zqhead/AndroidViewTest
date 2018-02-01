@@ -7,11 +7,14 @@ import android.widget.Button;
 
 import com.csii.androidviewtest.Activity.BezierTestWaveOneActivity;
 import com.csii.androidviewtest.Activity.BezierTestWaveTwoActivity;
+import com.csii.androidviewtest.Activity.PathMeasureTestActivity;
+import com.csii.androidviewtest.TestAndPractice.TestPathMeasure;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button start1;
     private Button start2;
     private Button startPath1;
+    private Button startPathMeasure;
     private Button startbezier1;
     private Button startbezier2;
     private Button startbezier3;
@@ -33,6 +36,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startbezier2.setOnClickListener(this);
         startbezier3 = (Button)findViewById(R.id.btn_start_wave2);
         startbezier3.setOnClickListener(this);
+        startPathMeasure = (Button)findViewById(R.id.btn_open_test_pathmeasure);
+        startPathMeasure.setOnClickListener(this);
 
     }
 
@@ -56,6 +61,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.btn_start_wave2:
                 startActivity(new Intent(MainActivity.this, BezierTestWaveTwoActivity.class));
+                break;
+            case R.id.btn_open_test_pathmeasure:
+                startActivity(new Intent(MainActivity.this, PathMeasureTestActivity.class));
                 break;
 
             default:

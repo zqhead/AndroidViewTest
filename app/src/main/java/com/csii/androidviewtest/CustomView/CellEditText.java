@@ -57,7 +57,7 @@ public class CellEditText extends EditText {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //super.onDraw(canvas);
+        super.onDraw(canvas);
         //外边框
         RectF rect = new RectF(0, 0, getWidth(), getHeight());
         mPaint.setColor(Color.GRAY);
@@ -97,6 +97,12 @@ public class CellEditText extends EditText {
                     getHeight() / 8,
                     mPaint);
         }
+    }
+
+    @Override
+    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+        super.onTextChanged(text, start, lengthBefore, lengthAfter);
+        setTextLength(lengthAfter);
     }
 
     /**
