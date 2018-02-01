@@ -22,6 +22,7 @@ import static android.content.ContentValues.TAG;
 
 /**
  * 探究PathMeasure的使用
+ * https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/Advance/Code/SearchView.java
  * Created by zqhead on 2018/2/1.
  */
 
