@@ -9,9 +9,37 @@
 
     <com.csii.androidviewtest.TestAndPractice.TestPathMeasure
         android:id="@+id/view_test_pathmeasure"
-        android:layout_width="379dp"
-        android:layout_height="505dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"/>
+        android:layout_width="307dp"
+        android:layout_height="368dp"
+        tools:layout_editor_absoluteX="39dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="60dp"/>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:text="start"
+        android:textAllCaps="false"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        tools:layout_editor_absoluteY="3dp"/>
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:text="complete"
+        android:textAllCaps="false"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_start"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline3"
+        app:layout_constraintGuide_begin="192dp"
+        android:orientation="vertical"/>
 
 </android.support.constraint.ConstraintLayout>
