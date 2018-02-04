@@ -89,6 +89,7 @@ public class TestCanvasAndPaint extends View {
                 break;
         }
         return true;
+
     }
 
     public int getCounter(){

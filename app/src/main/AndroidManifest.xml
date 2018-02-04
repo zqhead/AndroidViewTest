@@ -27,12 +27,7 @@
         </activity>
         <activity android:name=".BezierTestActivity">
         </activity>
-        <activity android:name=".Activity.BezierTestWaveOneActivity">
-        </activity>
-        <activity android:name=".Activity.BezierTestWaveTwoActivity">
-        </activity>
-        <activity android:name=".Activity.PathMeasureTestActivity">
-        </activity>
+        <activity android:name=".Activity.PathMeasureTestActivity"/>
     </application>
 
 </manifest>
