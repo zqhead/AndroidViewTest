@@ -7,7 +7,9 @@
     tools:context="com.csii.androidviewtest.Activity.TestViewOneActivity">
 
     <com.csii.androidviewtest.TestAndPractice.TestViewOperation
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_width="377dp"
+        android:layout_height="420dp"
+        tools:layout_editor_absoluteY="45dp"
+        tools:layout_editor_absoluteX="16dp"/>
 
 </android.support.constraint.ConstraintLayout>
