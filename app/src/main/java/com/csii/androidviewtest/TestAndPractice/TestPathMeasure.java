@@ -245,7 +245,7 @@ public class TestPathMeasure extends View {
                 break;
             case Searching:
                 Path circle = new Path();
-                searchPathMeasure.getSegment(circleOldLength - (circleNewLength - circleOldLength) * 10,
+                searchPathMeasure.getSegment(circleOldLength - (circleNewLength - circleOldLength) * 3,
                         circleNewLength,
                         circle, true);
                 canvas.drawPath(circle, mPaint);

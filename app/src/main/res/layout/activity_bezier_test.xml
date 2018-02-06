@@ -8,30 +8,28 @@
     tools:context="com.csii.androidviewtest.BezierTestActivity">
 
     <com.csii.androidviewtest.TestAndPractice.bezier.TestBezierCurve
+        android:id="@+id/testBezierCurve"
         android:layout_width="387dp"
         android:layout_height="252dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        android:id="@+id/testBezierCurve"
-        app:layout_constraintHorizontal_bias="0.0"
-        tools:layout_editor_absoluteX="-22dp"/>
+        />
 
     <com.csii.androidviewtest.TestAndPractice.bezier.TestBezierCurveTwo
+        android:id="@+id/testBezierCurveTwo"
         android:layout_width="231dp"
         android:layout_height="217dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.948"
         app:layout_constraintTop_toBottomOf="@+id/testBezierCurve"
-        app:layout_constraintHorizontal_bias="0.537"
-        android:id="@+id/testBezierCurveTwo"/>
+        app:layout_constraintVertical_bias="0.948"/>
 
 </android.support.constraint.ConstraintLayout>
