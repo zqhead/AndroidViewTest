@@ -1,5 +1,6 @@
 package com.csii.androidviewtest.TestAndPractice;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -30,6 +31,8 @@ public class TestPathMeasureTwo extends View {
 
     private float currentLength;
 
+    ValueAnimator valueAnimator;
+
     public TestPathMeasureTwo(Context context) {
         super(context);
         init();
@@ -48,9 +51,9 @@ public class TestPathMeasureTwo extends View {
     private void init(){
         path = new Path();
         RectF rectF = new RectF(-200, -200, 200, 200);
-        path.addCircle(0,0,200, Path.Direction.CW);
+        path.addCircle(0, 0, 200, Path.Direction.CW);
 
-        pathMeasure = new PathMeasure(path,false);
+        pathMeasure = new PathMeasure(path, false);
         circleLength = pathMeasure.getLength();
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -58,6 +61,11 @@ public class TestPathMeasureTwo extends View {
         mPaint.setColor(Color.BLACK);
 
         currentLength = 0;
+
+        valueAnimator = ValueAnimator.ofFloat(0, circleLength).setDuration(3000);
+        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+
     }
 
     @Override
@@ -76,8 +84,9 @@ public class TestPathMeasureTwo extends View {
         Path line = new Path();
         pathMeasure.getPosTan(currentLength, pos, tan);
         line.moveTo(pos[0], pos[1]);
-
-
-
+        line.rLineTo(pos[0] + 100 * tan[0], pos[1] + 100 *tan[1]);
+        canvas.drawPath(line, mPaint);
     }
+
+
 }
