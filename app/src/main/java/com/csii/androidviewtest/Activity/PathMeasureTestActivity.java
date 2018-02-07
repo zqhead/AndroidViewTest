@@ -9,9 +9,11 @@ import android.widget.Button;
 import com.csii.androidviewtest.BaseActivity;
 import com.csii.androidviewtest.R;
 import com.csii.androidviewtest.TestAndPractice.TestPathMeasure;
+import com.csii.androidviewtest.TestAndPractice.TestPathMeasureTwo;
 
 public class PathMeasureTestActivity extends BaseActivity {
     TestPathMeasure testPathMeasure;
+    TestPathMeasureTwo testPathMeasureTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +49,14 @@ public class PathMeasureTestActivity extends BaseActivity {
                 testPathMeasure.completeAnimator();
             }
         });
+
+        testPathMeasureTwo = (TestPathMeasureTwo)findViewById(R.id.view_test_pathmeasuretwo);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               testPathMeasureTwo.doAnimator();
+            }
+        }, 1000);
+
     }
 }
