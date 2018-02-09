@@ -73,7 +73,7 @@ public class TestPathFillType extends View {
 
         path.op(path3, Path.Op.DIFFERENCE);//取除去path3后差集给path 为右半圆
         path.op(path1, Path.Op.UNION);//取交集
-        path.op(path2, Path.Op.DIFFERENCE);
+        path.op(path2, Path.Op.DIFFERENCE);//取差集
         path.op(path4, Path.Op.XOR);//取异或
         path.op(path5, Path.Op.UNION);
 
@@ -81,6 +81,7 @@ public class TestPathFillType extends View {
 
         //画圈
         mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(20);
         canvas.drawCircle(0, 0, viewSize, mPaint);
 
     }

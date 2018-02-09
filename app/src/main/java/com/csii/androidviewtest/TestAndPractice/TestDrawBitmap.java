@@ -39,14 +39,14 @@ public class TestDrawBitmap extends View {
     private void initData(Context context) {
          bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.jaingdaoli);
          src = new Rect(0,0, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
-         dst = new RectF(400 , 0, 600, 200);
+         dst = new RectF(600 , 0, 800, 200);
 
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(bitmap, new Matrix(), new Paint());
-        canvas.drawBitmap(bitmap, 200, 0, new Paint());
+        canvas.drawBitmap(bitmap, 300, 0, new Paint());
         canvas.drawBitmap(bitmap, src, dst, new Paint());
 
     }
