@@ -32,6 +32,8 @@
         <activity android:name=".Activity.BezierTestWaveTwoActivity"/>
         <activity android:name=".Activity.MatrixTestOneActivity">
         </activity>
+        <activity android:name=".Activity.MatrixTestTwoActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.csii.androidviewtest.Activity.BezierTestWaveOneActivity;
 import com.csii.androidviewtest.Activity.BezierTestWaveTwoActivity;
 import com.csii.androidviewtest.Activity.MatrixTestOneActivity;
+import com.csii.androidviewtest.Activity.MatrixTestTwoActivity;
 import com.csii.androidviewtest.Activity.PathMeasureTestActivity;
 import com.csii.androidviewtest.TestAndPractice.TestPathMeasure;
 
@@ -20,6 +21,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startbezier2;
     private Button startbezier3;
     private Button startMatrix1;
+    private Button startMatrix2;
 
 
     @Override
@@ -42,6 +44,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startPathMeasure.setOnClickListener(this);
         startMatrix1 = (Button)findViewById(R.id.btn_open_matrix_test_one);
         startMatrix1.setOnClickListener(this);
+        startMatrix2 = (Button)findViewById(R.id.btn_open_matrix_test_two);
+        startMatrix2.setOnClickListener(this);
 
     }
 
@@ -72,7 +76,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_open_matrix_test_one:
                 startActivity(new Intent(MainActivity.this, MatrixTestOneActivity.class));
                 break;
-
+            case R.id.btn_open_matrix_test_two:
+                startActivity(new Intent(MainActivity.this, MatrixTestTwoActivity.class));
+                break;
 
             default:
                 break;

@@ -97,7 +97,7 @@ public class TestPathMeasureTwo extends View {
         pathMeasure.getPosTan(currentLength, pos, tan);
         //Log.i(TAG, "onDraw: "+ pos[0] +","+ pos[1] +"," + tan[0] +"," + tan[1]);
         line.moveTo(pos[0], pos[1]);
-        line.lineTo(pos[0] + 200 * tan[0], pos[1] + 200 * tan[1]);
+        line.rLineTo( 200 * tan[0], 200 * tan[1]);
         canvas.drawPath(line, mPaint);
     }
 

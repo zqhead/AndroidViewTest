@@ -66,7 +66,7 @@ public class TestPathMeasure extends View {
 
     private Animator.AnimatorListener mAnimationListener;
 
-    Handler mHandler = new Handler() {
+    public Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (mCurrentState){

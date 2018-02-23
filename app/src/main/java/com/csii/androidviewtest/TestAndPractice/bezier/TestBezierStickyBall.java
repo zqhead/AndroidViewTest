@@ -80,15 +80,13 @@ public class TestBezierStickyBall extends View {
         canvas.drawColor(Color.GRAY);
         canvas.drawCircle(circleX, circleY, ballRadius, circlePaint);
 
-
-        distance = (float)calPointsDistance(mWidth / 2, mHeight / 2, circleX, circleY);
-        if (distance < maxBounds && !broken){
-            stickyRadius = (float)(1 -0.4 *distance / maxBounds) * ballRadius;
+        //如果没有断开，绘制粘连
+        if (!broken){
+            stickyRadius = (float)(1 -0.4 *distance / maxBounds) * ballRadius;//根据距离，动态设置圆的半径
             canvas.drawCircle(mWidth / 2, mHeight / 2, stickyRadius, circlePaint);
-            Path path = drawAdhesionBody(mWidth / 2, mHeight / 2, stickyRadius, 45, circleX, circleY, ballRadius, 45);
+            Path path = drawAdhesionBody(mWidth / 2, mHeight / 2, stickyRadius, 45,
+                    circleX, circleY, ballRadius, 45);//获取粘连部分
             canvas.drawPath(path, circlePaint);
-        } else {
-            broken = true;
         }
 
         //写文字
@@ -256,6 +254,10 @@ public class TestBezierStickyBall extends View {
             case MotionEvent.ACTION_OUTSIDE:
                 circleX = event.getX();
                 circleY = event.getY();
+                distance = (float)calPointsDistance(mWidth / 2, mHeight / 2, circleX, circleY);
+                if (distance > maxBounds) {
+                    broken = true;
+                }
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
