@@ -69,12 +69,16 @@ public class TestMatrixOne extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //mMatrix = canvas.getMatrix();//使用此种方式获得的matrix，它的坐标操作是相对于全屏幕的，在view内画drawbitmap时会将bitmap按照全屏幕的运算坐标结果，映射到view内部的坐标系上，所以和预想得到的结果会有偏差
+        //mMatrix = canvas.getMatrix();//使用此种方式获得的matrix，获取的矩阵非单位矩阵，而是带有View相对于屏幕左上角的偏移量 例如Matrix{[1.0, 0.0, 0.0][0.0, 1.0, 240.0][0.0, 0.0, 1.0]}
         canvas.drawLine(0, mHeight / 2, mWidth, mHeight / 2, linePaint);
         canvas.drawLine(mWidth / 2, 0, mWidth / 2, mHeight, linePaint);
 //
         canvas.save();
-        Log.i(TAG, mWidth / 2 +","+ mHeight / 2);
+        Log.i(TAG, "onDraw: " + canvas.getMatrix().toString() );
+
+        int[] loc = new int[2];
+        this.getLocationOnScreen(loc);//使用此函数可以获取view左上角在屏幕上的绝对位置坐标
+        Log.i(TAG, "onDraw: " + loc[0] + " " + loc[1]);
         mMatrix.preTranslate(mWidth /2,  mHeight / 2);
 
         //canvas.setMatrix(mMatrix);//setMatrix方法是用Matrix代替canvas现有的matrix失效
@@ -88,12 +92,21 @@ public class TestMatrixOne extends View {
         //mMatrix.postTranslate(mWidth / 4, mHeight / 4);
         //mMatrix.postRotate(100);//此方法不设置旋转中心，则旋转以原点为旋转中心
         //mMatrix.postRotate(180, mWidth / 2, mHeight / 2);//此方法以后两个数值代表的点做旋转中心，进行旋转（此处原有matrix不是单位矩阵，所以使用前乘和后乘得到得到效果并不同）
-        mMatrix.postSkew(0.5f, 0, mWidth / 2, mHeight / 2);//此错切表示水平错切，即y坐标不懂，所有X坐标相对于目标点的差值0.5倍y坐标差值的水平错切，x轴正常向
+        mMatrix.postSkew(0.5f, 0, mWidth / 2, mHeight / 2);//此错切表示水平错切，即y坐标不懂，所有X坐标相对于目标点的差值0.5倍y坐标差值的水平错切，y轴正常
 //        mMatrix.setTranslate(0,0);
 //        mMatrix.setTranslate(100,100);//使用set会废弃现有matrix，而是使用初始化时矩阵执行set的操作
 
         Log.i(TAG, "onDraw: " + mMatrix.toString());
         canvas.drawBitmap(bitmap, mMatrix, mPaint);
+
+
+        /**
+         * 探究 下面的一段实际执行顺序为 2pre 1set 3post (还未验证，觉得可能是错的)
+         * http://blog.csdn.net/rav009/article/details/7763223
+         * */
+        mMatrix.setScale(0.5f,0.5f);//1
+        mMatrix.preTranslate(100, 100);//2
+        mMatrix.postTranslate(-100, -100);//3
     }
 
     @Override

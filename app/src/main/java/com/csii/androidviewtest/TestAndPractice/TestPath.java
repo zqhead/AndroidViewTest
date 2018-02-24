@@ -17,6 +17,7 @@ import com.csii.androidviewtest.Util.DimensionUtil;
  */
 
 public class TestPath extends View {
+    private Paint mPaint;
     public TestPath(Context context) {
         this(context, null);
     }
@@ -31,6 +32,10 @@ public class TestPath extends View {
     }
 
     public void initData(){
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.BLUE);
+        mPaint.setStyle(Paint.Style.STROKE);//当paint的path为fill时，即使path非闭合，在drawPath时也会将path给闭合
+        mPaint.setStrokeWidth(DimensionUtil.dip2px(getContext(), 2));
     }
 
     @Override
@@ -49,10 +54,7 @@ public class TestPath extends View {
 
         path.setLastPoint(300, 0);
 
-        Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.BLUE);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(DimensionUtil.dip2px(getContext(), 2));
+
 
         canvas.drawPath(path, mPaint);
 

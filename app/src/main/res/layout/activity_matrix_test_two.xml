@@ -8,9 +8,71 @@
     tools:context="com.csii.androidviewtest.Activity.MatrixTestTwoActivity">
 
     <com.csii.androidviewtest.TestAndPractice.Matrix.TestMatrixTwo
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/View_matrix_test"
+        android:layout_width="390dp"
+        android:layout_height="459dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <RadioGroup
+        android:id="@+id/group_radio"
+        android:layout_width="386dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="8dp"
+        android:checkedButton="@+id/btn_radio0"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/btn_radio0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_weight="1"
+            android:text="0"/>
+
+        <RadioButton
+            android:id="@+id/btn_radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="1"/>
+
+        <RadioButton
+            android:id="@+id/btn_radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="2"/>
+
+        <RadioButton
+            android:id="@+id/btn_radio3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="3"/>
+
+        <RadioButton
+            android:id="@+id/btn_radio4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="48dp"
+            android:layout_weight="1"
+            android:text="4"/>
+    </RadioGroup>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="431dp"/>
 
 </android.support.constraint.ConstraintLayout>

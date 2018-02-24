@@ -1,17 +1,22 @@
 package com.csii.androidviewtest.TestAndPractice.Matrix;
 
+import android.app.AliasActivity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.text.method.Touch;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.csii.androidviewtest.R;
+import com.csii.androidviewtest.Util.DistanceUtil;
 
 /**
  * matrix的其他用法探究 如setPolyToPoly
@@ -24,6 +29,15 @@ public class TestMatrixTwo extends View {
     public Bitmap mBitmap;
     public float[] src;
     public float[] dst;
+    private float[] res;
+
+    private int pointCounts;
+    private int boundsRadius = 100;
+    private Paint circlePaint;
+
+    {
+        pointCounts = 0;
+    }
 
 
     public TestMatrixTwo(Context context) {
@@ -41,7 +55,14 @@ public class TestMatrixTwo extends View {
         init();
     }
 
-    public void init(){
+    private void init(){
+
+        circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        circlePaint.setColor(Color.RED);
+        circlePaint.setAlpha(127);
+        circlePaint.setStyle(Paint.Style.FILL);
+
+
         mMatrix = new Matrix();
         //mMatrix.setPolyToPoly();
         mBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.cat);
@@ -49,19 +70,19 @@ public class TestMatrixTwo extends View {
         float bw = mBitmap.getWidth();
         float bh = mBitmap.getHeight();
 
-        float[] res = {0, 0,
+        float[] orgin = {0, 0,
                 bw, 0 ,
-                bw, bh / 2 ,
-                0, bh / 2};
+                bw, bh,
+                0, bh};
+        res = orgin.clone();
         src = res.clone();
         dst = res.clone();
 
-        dst[0] += 50;
-        dst[1] += 50;
-        dst[2] -= 50;
-        dst[3] += 50;
+        mMatrix.setPolyToPoly(src, 0, dst, 0, pointCounts);
+    }
 
-        mMatrix.setPolyToPoly(src, 0, dst, 0, 4);
+    private void reset(){
+        mMatrix.setPolyToPoly(src, 0, dst, 0, pointCounts);
     }
 
     @Override
@@ -75,6 +96,44 @@ public class TestMatrixTwo extends View {
         //canvas.save();
 
         //canvas.setMatrix(mMatrix);
+        canvas.translate(100, 100);
         canvas.drawBitmap(mBitmap, mMatrix, new Paint());
+        for (int i = 0; i < pointCounts; i++) {
+            canvas.drawCircle(dst[2 * i], dst[2 * i + 1], 20, circlePaint);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_MOVE:
+                float gesX = event.getX();
+                float gesY = event.getY();
+
+                for (int i = 0; i < dst.length; i += 2) {
+                    float distance = DistanceUtil.getDistance(dst[i] + 100, dst[i + 1] + 100, gesX, gesY);
+                    if (distance < boundsRadius) {
+                        dst[i] = gesX - 100;
+                        dst[i + 1] = gesY - 100;
+                        break;
+                    }
+                }
+                reset();
+                invalidate();
+                break;
+
+            default:
+                break;
+        }
+        return true;
+    }
+
+    public void setPointCounts(int counts) {
+        int sum = counts< 0 || counts > 4 ? 4 : counts;
+        pointCounts = sum;
+        src = res.clone();
+        dst = res.clone();
+        reset();
+        invalidate();
     }
 }

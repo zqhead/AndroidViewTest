@@ -53,6 +53,7 @@ public class TestPathFillType extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //canvas.drawColor(Color.GRAY);
         Path path = new Path();
         Path path1 = new Path();
         Path path2 = new Path();
@@ -81,7 +82,7 @@ public class TestPathFillType extends View {
 
         //画圈
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(20);
+        mPaint.setStrokeWidth(40);
         canvas.drawCircle(0, 0, viewSize, mPaint);
 
     }
