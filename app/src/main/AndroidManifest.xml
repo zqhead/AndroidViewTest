@@ -36,6 +36,8 @@
         </activity>
         <activity android:name=".Activity.MatrixTestThreeActivity">
         </activity>
+        <activity android:name=".Activity.CameraTestOneActivity">
+        </activity>
     </application>
 
 </manifest>

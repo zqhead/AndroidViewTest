@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.csii.androidviewtest.Activity.BezierTestWaveOneActivity;
 import com.csii.androidviewtest.Activity.BezierTestWaveTwoActivity;
+import com.csii.androidviewtest.Activity.CameraTestOneActivity;
 import com.csii.androidviewtest.Activity.MatrixTestOneActivity;
 import com.csii.androidviewtest.Activity.MatrixTestThreeActivity;
 import com.csii.androidviewtest.Activity.MatrixTestTwoActivity;
@@ -24,6 +25,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startMatrix1;
     private Button startMatrix2;
     private Button startMatrix3;
+    private Button startCamera1;
 
 
     @Override
@@ -50,6 +52,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startMatrix2.setOnClickListener(this);
         startMatrix3 = (Button)findViewById(R.id.btn_open_matrix_test_three);
         startMatrix3.setOnClickListener(this);
+        startCamera1 = (Button)findViewById(R.id.btn_open_camera_test_one);
+        startCamera1.setOnClickListener(this);
+
 
     }
 
@@ -85,6 +90,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.btn_open_matrix_test_three:
                 startActivity(new Intent(MainActivity.this, MatrixTestThreeActivity.class));
+                break;
+            case R.id.btn_open_camera_test_one:
+                startActivity(new Intent(MainActivity.this, CameraTestOneActivity.class));
                 break;
 
             default:

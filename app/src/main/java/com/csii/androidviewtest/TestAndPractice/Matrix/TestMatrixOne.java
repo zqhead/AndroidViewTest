@@ -72,7 +72,7 @@ public class TestMatrixOne extends View {
         //mMatrix = canvas.getMatrix();//使用此种方式获得的matrix，获取的矩阵非单位矩阵，而是带有View相对于屏幕左上角的偏移量 例如Matrix{[1.0, 0.0, 0.0][0.0, 1.0, 240.0][0.0, 0.0, 1.0]}
         canvas.drawLine(0, mHeight / 2, mWidth, mHeight / 2, linePaint);
         canvas.drawLine(mWidth / 2, 0, mWidth / 2, mHeight, linePaint);
-//
+
         canvas.save();
         Log.i(TAG, "onDraw: " + canvas.getMatrix().toString() );
 
@@ -89,6 +89,7 @@ public class TestMatrixOne extends View {
         //canvas.drawBitmap(bitmap, mMatrix, mPaint);
         canvas.restore();//canvas的save和restore不会影响matrix的操作
 
+        canvas.save();
         //mMatrix.postTranslate(mWidth / 4, mHeight / 4);
         //mMatrix.postRotate(100);//此方法不设置旋转中心，则旋转以原点为旋转中心
         //mMatrix.postRotate(180, mWidth / 2, mHeight / 2);//此方法以后两个数值代表的点做旋转中心，进行旋转（此处原有matrix不是单位矩阵，所以使用前乘和后乘得到得到效果并不同）
@@ -99,14 +100,30 @@ public class TestMatrixOne extends View {
         Log.i(TAG, "onDraw: " + mMatrix.toString());
         canvas.drawBitmap(bitmap, mMatrix, mPaint);
 
+        canvas.restore();
+        canvas.translate(mWidth / 4,  mHeight / 4);
 
         /**
          * 探究 下面的一段实际执行顺序为 2pre 1set 3post (还未验证，觉得可能是错的)
+         * 2018- 2-26日验证，前面的结论错误，下面执行顺序就是按照 1,2,3的顺序执行，并且图片没有回到其实位置（因为缩放改变了图片的大小，移动会原始位置的距离也发生变化，不再是原始图片尺寸的距离
+         * 实际执行就是按照整体矩阵的相乘顺序，变换几行代码的位置，其实就是使用矩阵结合律使运算顺序发生变化，但结果不变
+         * 但注意，如果中间使用set则前面的pre和post都将失效
          * http://blog.csdn.net/rav009/article/details/7763223
          * */
-        mMatrix.setScale(0.5f,0.5f);//1
-        mMatrix.preTranslate(100, 100);//2
-        mMatrix.postTranslate(-100, -100);//3
+        mMatrix.reset();
+        Log.i(TAG, "onDraw: " + mMatrix.toString());
+
+        mMatrix.setScale(0.4f,0.4f);//1
+
+        //mMatrix.preRotate(180);//1
+//        mMatrix.postSkew(0.5f,0);
+        Log.i(TAG, "onDraw: " + mMatrix.toString());
+        mMatrix.preTranslate(bitmap.getWidth() /2,  bitmap.getHeight() / 2);//2
+        Log.i(TAG, "onDraw: " + mMatrix.toString());
+
+        mMatrix.postTranslate(-bitmap.getWidth() /2,  -bitmap.getHeight() / 2);//3
+        Log.i(TAG, "onDraw: " + mMatrix.toString());
+        canvas.drawBitmap(bitmap, mMatrix, mPaint);
     }
 
     @Override
