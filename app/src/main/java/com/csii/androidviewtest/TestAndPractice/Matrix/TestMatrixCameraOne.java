@@ -53,7 +53,7 @@ public class TestMatrixCameraOne extends View {
         canvas.save();
 
         //mMatrix.preTranslate(100, 100);
-        mCamera.translate(100, 100, 100);
+        mCamera.translate(100, 100, 100);//x向右100， y向上100 z向屏幕内100
 
         mCamera.applyToCanvas(canvas);
         canvas.drawBitmap(mBitmap, mMatrix, new Paint());

@@ -9,8 +9,25 @@
 
     <com.csii.androidviewtest.TestAndPractice.Matrix.TestMatrixCameraOne
         android:id="@+id/testMatrixCameraOne"
+        android:layout_width="388dp"
+        android:layout_height="252dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <com.csii.androidviewtest.TestAndPractice.Matrix.TestMatrixCameraTwo
+        android:id="@+id/view_camera_two"
+        android:layout_width="0dp"
+        android:layout_height="216dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline4"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="256dp"/>
+
 </android.support.constraint.ConstraintLayout>

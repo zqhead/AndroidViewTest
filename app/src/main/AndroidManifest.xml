@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".Activity.CameraTestOneActivity">
         </activity>
+        <activity android:name=".Activity.TouchEventTestActivity">
+        </activity>
     </application>
 
 </manifest>
