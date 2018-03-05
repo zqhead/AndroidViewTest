@@ -27,6 +27,7 @@ public class TestViewGroupTouchEventOne extends LinearLayout {
     }
 
     /**
+     * 当子类继承自ViewGroup时，需要实现onLayout方法
      * ViewGroup的onLayout的方法是个抽象方法（abstract）,所以需要具体实现才可以
      * */
 //    @Override

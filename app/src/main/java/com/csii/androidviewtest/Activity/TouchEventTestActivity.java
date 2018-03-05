@@ -29,7 +29,7 @@ public class TouchEventTestActivity extends BaseActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                LogUtil.i("TouchEventTestActivity","setOnClickListener");
             }
         });
     }
