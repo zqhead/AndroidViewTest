@@ -5,7 +5,7 @@ import android.text.Layout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.csii.androidviewtest.Util.LogUtil;
 
@@ -13,7 +13,7 @@ import com.csii.androidviewtest.Util.LogUtil;
  * Created by zqhead on 2018/2/27.
  */
 
-public class TestViewGroupTouchEventOne extends LinearLayout {
+public class TestViewGroupTouchEventOne extends RelativeLayout {
     public TestViewGroupTouchEventOne(Context context) {
         super(context);
     }

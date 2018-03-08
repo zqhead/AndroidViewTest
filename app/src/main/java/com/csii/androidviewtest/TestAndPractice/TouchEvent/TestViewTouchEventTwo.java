@@ -12,19 +12,20 @@ import android.view.View;
 import com.csii.androidviewtest.Util.LogUtil;
 
 /**
- * Created by zqhead on 2018/2/27.
+ * Created by zqhead on 2018/3/8.
  */
 
-public class TestViewTouchEventOne extends View {
-    public TestViewTouchEventOne(Context context) {
-        this(context, null);
+public class TestViewTouchEventTwo extends View {
+
+    public TestViewTouchEventTwo(Context context) {
+        super(context);
     }
 
-    public TestViewTouchEventOne(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+    public TestViewTouchEventTwo(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
     }
 
-    public TestViewTouchEventOne(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TestViewTouchEventTwo(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -32,24 +33,24 @@ public class TestViewTouchEventOne extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(Color.YELLOW);
 
-        canvas.drawColor(Color.GREEN);
+        canvas.drawColor(Color.YELLOW);
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        LogUtil.i("TestViewTouchEventOne", "dispatchTouchEvent" );
+        LogUtil.i("TestViewTouchEventTwo", "dispatchTouchEvent" );
         return super.dispatchTouchEvent(event);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        LogUtil.i("TestViewTouchEventOne", "onTouchEvent" );
-        LogUtil.i("TestViewTouchEventOne", "X:"+event.getX()+ ", RawX:" + event.getRawX());
-        LogUtil.i("TestViewTouchEventOne", "Y:"+event.getX()+ ", RawY:" + event.getRawX());
+        LogUtil.i("TestViewTouchEventTwo", "onTouchEvent" );
+        LogUtil.i("TestViewTouchEventTwo", "X:"+event.getX()+ ", RawX:" + event.getRawX());
+        LogUtil.i("TestViewTouchEventTwo", "Y:"+event.getX()+ ", RawY:" + event.getRawX());
         super.onTouchEvent(event);
-        return false;
+        return true;
     }
 
     @Override
