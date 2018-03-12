@@ -17,7 +17,7 @@ public class TouchEventTestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_touch_event_test);
 
-        TestViewTouchEventOne view = new TestViewTouchEventOne(this);
+        TestViewTouchEventOne view = (TestViewTouchEventOne) findViewById(R.id.touch1);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

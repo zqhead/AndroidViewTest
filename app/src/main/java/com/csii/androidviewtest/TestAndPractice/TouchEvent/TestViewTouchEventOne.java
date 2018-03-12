@@ -47,13 +47,14 @@ public class TestViewTouchEventOne extends View {
     public boolean onTouchEvent(MotionEvent event) {
         LogUtil.i("TestViewTouchEventOne", "onTouchEvent" );
         LogUtil.i("TestViewTouchEventOne", "X:"+event.getX()+ ", RawX:" + event.getRawX());
-        LogUtil.i("TestViewTouchEventOne", "Y:"+event.getX()+ ", RawY:" + event.getRawX());
+        LogUtil.i("TestViewTouchEventOne", "Y:"+event.getY()+ ", RawY:" + event.getRawY());
         super.onTouchEvent(event);
-        return false;
+        return true;
     }
 
     @Override
     public boolean performClick() {
+        LogUtil.i("TestViewTouchEventOne", "performClick" );
         return super.performClick();
     }
 }

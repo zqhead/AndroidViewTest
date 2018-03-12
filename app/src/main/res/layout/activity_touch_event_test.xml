@@ -18,10 +18,12 @@
         app:layout_constraintVertical_bias="1.0">
 
         <com.csii.androidviewtest.TestAndPractice.TouchEvent.TestViewTouchEventOne
+            android:id="@+id/touch1"
             android:layout_width="189dp"
             android:layout_height="211dp"/>
 
         <com.csii.androidviewtest.TestAndPractice.TouchEvent.TestViewTouchEventTwo
+            android:id="@+id/touch2"
             android:layout_width="151dp"
             android:layout_height="148dp"
             android:layout_weight="1"
