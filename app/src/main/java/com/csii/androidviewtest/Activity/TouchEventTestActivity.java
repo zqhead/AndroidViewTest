@@ -22,7 +22,7 @@ public class TouchEventTestActivity extends BaseActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 LogUtil.i("TouchEventTestActivity","setOnTouchListener");
-                return true;
+                return false;
             }
         });
 
@@ -32,5 +32,11 @@ public class TouchEventTestActivity extends BaseActivity {
                 LogUtil.i("TouchEventTestActivity","setOnClickListener");
             }
         });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        LogUtil.i("\n\n");
+        return super.dispatchTouchEvent(ev);
     }
 }

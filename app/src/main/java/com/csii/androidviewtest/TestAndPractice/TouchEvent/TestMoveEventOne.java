@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
+ * 对于onTouchEvent的 MoveEvent的探索
  * Created by zqhead on 2018/3/7.
  */
 
