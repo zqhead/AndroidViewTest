@@ -40,6 +40,8 @@
         </activity>
         <activity android:name=".Activity.TouchEventTestActivity">
         </activity>
+        <activity android:name=".Activity.RegionTestActivity">
+        </activity>
     </application>
 
 </manifest>
