@@ -96,7 +96,7 @@ public class TestPathRegion extends View {
         upP.addArc(outerRectF, 240, outerSweepAngle);
         upP.arcTo(innerRectF, 300, innerSweepAngle);
         upP.close();
-        upR.setPath(upP, mRegion);
+        upR.setPath(upP, mRegion);//setPath 可以理解为将path与mRegion的交集设置为upR的区域
 
         rightP.addArc(outerRectF, 330, outerSweepAngle);
         rightP.arcTo(innerRectF, 30, innerSweepAngle);
