@@ -42,6 +42,8 @@
         </activity>
         <activity android:name=".Activity.RegionTestActivity">
         </activity>
+        <activity android:name=".Activity.ViewGroupTestOneActivity">
+        </activity>
     </application>
 
 </manifest>

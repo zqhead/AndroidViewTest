@@ -80,7 +80,7 @@ public class TestMatrixCameraTwo extends View {
          * Camera测试中的一些实践总结(只是根据现象做出一些总结，不一定正确)
          * 1，实践中发现，不管canvas或者camera怎么变换，只要当将camera进行融合时（camera的矩阵去乘canvas的matrix或者使用applyToCanvas）,
          *    都会将Camera的执行的变换对现有canvas再执行一遍，融合后canvas的原点讲和camera重合
-         * 2，camera的translate和rotate都是对camera的本体进行操作 然后坐标系自动适应camera本体的变化，而产生变化（要形成空间概念来理解，这块的理解可以抽象为空间内物体不懂，视角的变换,但是效果上，还是Camera不懂，物体动）
+         * 2，camera的translate和rotate都是对camera的本体进行操作 然后坐标系自动适应camera本体的变化，而产生变化（要形成空间概念来理解，这块的理解可以抽象为空间内物体不动，视角的变换,但是效果上，还是Camera不懂，物体动）
          * 3，只要想要canvas的旋转中心相对于canvas的原点数值和 camera的坐标中操作的点数值相同， 融合后就能的到根据旋转中心旋转的效果，如本view的下面的例子
          * */
         //canvas.translate(mViewWidth / 2, mViewHeight / 2);
