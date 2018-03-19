@@ -117,7 +117,7 @@ public class TestScrollerOne extends ViewGroup {
             case MotionEvent.ACTION_UP:
 //                index = (getScrollX() + getWidth() / 2) / getWidth();
 //                int scrollX = getScrollX() < leftScreen ? leftScreen : getScrollX() > rightScreen ? rightScreen : getScrollX();
-//                int endX = index * getWidth() - getScrollX() ;
+//                int endX = index * getWidth() - getScrollX() ;//getScrollX ()的值等于 父view原点x减去 本view左上角在父view坐标系的X； 所以X为正（左上角位于原点右边）getScrollX得到的值为负 反过来则为正
 //
 //                mScroller.startScroll((int)theLastXMove, 0 , endX, 0);
 
