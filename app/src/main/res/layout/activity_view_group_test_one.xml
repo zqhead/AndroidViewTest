@@ -10,6 +10,7 @@
     <com.csii.androidviewtest.TestAndPractice.container.TestViewGroupOne
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -37,4 +38,27 @@
             android:layout_height="100dp"
             android:text="TextView"/>
     </com.csii.androidviewtest.TestAndPractice.container.TestViewGroupOne>
+
+    <com.csii.androidviewtest.TestAndPractice.container.TestScrollerOne
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="button1"/>
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="button2"/>
+
+    </com.csii.androidviewtest.TestAndPractice.container.TestScrollerOne>
 </android.support.constraint.ConstraintLayout>
