@@ -25,6 +25,7 @@ public class TestScrollerOne extends ViewGroup {
     private float theLastXMove;
     private float minTouchX;
     private int index;
+    private int childCount;
 
     private int leftScreen;
     private int rightScreen;
@@ -39,8 +40,8 @@ public class TestScrollerOne extends ViewGroup {
 
     private void init(){
         mScroller = new Scroller(this.getContext());
-
-        minTouchX = 100;
+        index = 1;
+        minTouchX = 30;
     }
 
     @Override
@@ -50,15 +51,13 @@ public class TestScrollerOne extends ViewGroup {
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
         }
        setMeasuredDimension(widthMeasureSpec,heightMeasureSpec);
-//        setMeasuredDimension(resolveSize(maxWidth, widthMeasureSpec),
-//                resolveSize(height, heightMeasureSpec));
-        //this.scrollTo(getMeasuredWidth() * index, 0 );
+        this.scrollTo(getMeasuredWidth() * index, 0 );//测量完大小进行滚动，让view进行移动，让首先显示的为第index个view
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if(changed){
-            int left = l;
+            int left = 0;
             for (int i = 0; i < getChildCount(); i++ ) {
                 View child = getChildAt(i);
                 LogUtil.i("TestScrollerOne - onLayout", l + ", " + t + ", " + r + ", " + b);
@@ -67,13 +66,13 @@ public class TestScrollerOne extends ViewGroup {
                 //这里传给子view的ltrb有坑，上面view的onlayout的ltrb的位置是相对于它父view的位置
                 //但是本VIewGroup调用子view的layout时传入的ltrb应该是相对于本VIewGroup内部坐标系的位置，而非viewGroup的父view的位置
                 // 这里的子view的参考坐标系为以此viewGroup的左上角（0,0）的坐标系
-                child.layout(i * child.getMeasuredWidth(), 0, (i + 1) * child.getMeasuredWidth(), 0 + child.getMeasuredHeight());
+                child.layout(left, 0, left + child.getMeasuredWidth(), 0 + child.getMeasuredHeight());
 
                 LogUtil.i("TestScrollerOne - onLayout", child.getLeft() + ", " + child.getTop() + ", " + child.getRight() + ", " + child.getBottom());
                 left = child.getRight();
             }
 
-            leftScreen = l;
+            leftScreen = 0;
             rightScreen = left;
 
         }
@@ -98,7 +97,7 @@ public class TestScrollerOne extends ViewGroup {
                 float current = Math.abs(mXMove - mXDown);
                 theLastXMove = mXMove;
                 if(current >  minTouchX) {
-                    return true;
+                    return true;//当移动距离大于最小滚动距离时，进行事件拦截
                 }
                 break;
         }
@@ -122,7 +121,8 @@ public class TestScrollerOne extends ViewGroup {
 //                mScroller.startScroll((int)theLastXMove, 0 , endX, 0);
 
                 // 当手指抬起时，根据当前的滚动值来判定应该滚动到哪个子控件的界面
-                int targetIndex = (getScrollX() + getWidth() / 2) / getWidth();
+                int targetIndex = (getScrollX() + getWidth() / 2) / getWidth();//getWidth() / 2才能左右兼顾 否则想左右滑动都能容易，就需要分开处理
+                targetIndex = targetIndex >= getChildCount() ? getChildCount() - 1: targetIndex;
                 int dx = targetIndex * getWidth() - getScrollX();
                 // 第二步，调用startScroll()方法来初始化滚动数据并刷新界面
                 mScroller.startScroll(getScrollX(), 0, dx, 0);
