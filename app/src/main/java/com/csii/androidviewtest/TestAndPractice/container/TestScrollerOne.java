@@ -6,6 +6,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
@@ -14,6 +15,7 @@ import com.csii.androidviewtest.Util.LogUtil;
 
 /**
  * 探究scroller的使用 模仿完成简单的ViewPager
+ * 3-22 还需要测试一下scroller的fling（）以及 velocityTracker
  * Created by zqhead on 2018/3/19.
  */
 
@@ -29,6 +31,8 @@ public class TestScrollerOne extends ViewGroup {
 
     private int leftScreen;
     private int rightScreen;
+
+    private VelocityTracker mVelocityTracker;
     public TestScrollerOne(Context context) {
         this(context, null);
     }
@@ -87,6 +91,9 @@ public class TestScrollerOne extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if(mVelocityTracker ==  null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mXDown = ev.getRawX();
