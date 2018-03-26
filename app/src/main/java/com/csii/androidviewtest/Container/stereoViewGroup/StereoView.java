@@ -87,25 +87,6 @@ public class StereoView extends ViewGroup {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                isCanFling = false;
-                LogUtil.i("111111");
-                mXDown = ev.getX();
-                mYDown = ev.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-
-                float mXMove = ev.getX();
-                float mYMove = ev.getY();
-                isCanFling = isCanScrolling(mXMove, mYMove);
-                break;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
 //        switch (ev.getAction()) {
 //            case MotionEvent.ACTION_DOWN:
 //                LogUtil.i("111111");
@@ -116,10 +97,34 @@ public class StereoView extends ViewGroup {
 //                LogUtil.i("22222222");
 //                float mXMove = ev.getX();
 //                float mYMove = ev.getY();
-//                return isCanScrolling(mXMove, mYMove);
+//                isCanFling = isCanScrolling(mXMove, mYMove);
+//                break;
+//
 //        }
-//        return super.onInterceptTouchEvent(ev);
-        return isCanFling;
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                LogUtil.i("111111");
+                mXDown = ev.getX();
+                mYDown = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                LogUtil.i("22222222");
+                float mXMove = ev.getX();
+                float mYMove = ev.getY();
+                isCanFling = isCanScrolling(mXMove, mYMove);
+                if (isCanFling == true){
+                    return isCanFling;
+                }
+                break;
+        }
+
+        return super.onInterceptTouchEvent(ev);
+        //return isCanFling;
     }
 
     private boolean isCanScrolling(float mXMove, float mYMove) {
@@ -144,8 +149,13 @@ public class StereoView extends ViewGroup {
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                int currentIndex = (getScrollY() + mHeight / 2)/ mHeight;
-                int dy = currentIndex * mHeight - getScrollY();
+                isCanFling = false;
+//                int currentIndex = (getScrollY() + mHeight / 2)/ mHeight;
+//                int dy = currentIndex * mHeight - getScrollY();
+
+                int Y = getScrollY() % mHeight;
+                int dy = Y <= mHeight / 2 ? - Y : mHeight - Y;
+                LogUtil.i("ACTION_UP",getScrollY() + "," + Y + ","+ dy);
                 mScroller.startScroll(0, getScrollY(), 0, dy);
                 invalidate();
                 break;
@@ -167,74 +177,29 @@ public class StereoView extends ViewGroup {
             addNext();
             scrollBy(0, -mHeight);
         }
-
-//        realDelta = realDelta % mHeight;
-//        //delta = (int) (delta / resistance);
-//        if (Math.abs(realDelta) > mHeight / 4) {
-//            return;
-//        }
-//        scrollBy(0, (int)realDelta);
-//        if (getScrollY() < 5) {
-//            addPre();
-//            scrollBy(0, mHeight);
-//        } else if (getScrollY() > (getChildCount() - 1) * mHeight - 5) {
-//            addNext();
-//            scrollBy(0, -mHeight);
-//        }
     }
 
-//    private void addPre() {
-//        int childCount = getChildCount();
-//        View lastChild = getChildAt(childCount - 1);
-//        removeViewAt(childCount - 1 );
-//        addView(lastChild, 0);
-//        mCurrentItem = ((mCurrentItem - 1) + getChildCount()) % getChildCount();
-//
-//    }
-//
-//    private void addNext() {
-//        int childCount = getChildCount();
-//        View lastChild = getChildAt(0);
-//        removeViewAt(0 );
-//        addView(lastChild, childCount - 1);
-//    }
-
-    /**
-     * 把第一个item移动到最后一个item位置
-     */
-    private void addNext() {
-        //mCurScreen = (mCurScreen + 1) % getChildCount();
-        int childCount = getChildCount();
-        LogUtil.i(childCount);
-        View view = getChildAt(0);
-        removeViewAt(0);
-
-        addView(view, childCount - 1);
-//        if (iStereoListener != null) {
-//            iStereoListener.toNext(mCurScreen);
-//        }
-    }
-
-    /**
-     * 把最后一个item移动到第一个item位置
-     */
     private void addPre() {
-        //mCurScreen = ((mCurScreen - 1) + getChildCount()) % getChildCount();
         int childCount = getChildCount();
-        LogUtil.i(childCount);
-        View view = getChildAt(childCount - 1);
-        removeViewAt(childCount - 1);
-        LogUtil.i(getChildCount());
-        addView(view, 0);
-        LogUtil.i(getChildCount());
-//        if (iStereoListener != null) {
-//            iStereoListener.toPre(mCurScreen);
-//        }
+        View lastChild = getChildAt(childCount - 1);
+        removeViewAt(childCount - 1 );
+        addView(lastChild, 0);
+        mCurrentItem = ((mCurrentItem - 1) + getChildCount()) % getChildCount();
+
     }
+
+    private void addNext() {
+        int childCount = getChildCount();
+        View lastChild = getChildAt(0);
+        removeViewAt(0 );
+        addView(lastChild, childCount - 1);
+        mCurrentItem = (mCurrentItem + 1) % getChildCount();
+    }
+
 
     @Override
     public void computeScroll() {
-        if (!mScroller.isFinished()) {
+        if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
             postInvalidate();
         }
