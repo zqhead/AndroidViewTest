@@ -15,10 +15,12 @@ import android.widget.Scroller;
 import com.csii.androidviewtest.Util.LogUtil;
 
 /**
- * Created by zqhead on 2018/3/20.
+ *
+ * 连续滚动使用一个新的类来实现
+ * Created by zqhead on 2018/3/28.
  */
 
-public class StereoView extends ViewGroup {
+public class StereoViewContinuous extends ViewGroup {
     private int StartIndex;//起始状态显示第几个子控件
 
     private Camera mCamera;
@@ -42,8 +44,17 @@ public class StereoView extends ViewGroup {
     private int mHeight;
     private int mCurrentItem;
     private VelocityTracker mVelocityTracker;
+    private final int viewScrollTime = 1000;
 
+    private int standardSpeed = 2000;
     private boolean initializeMeasure = false;
+    private boolean isAdding = false;
+    private state mCurrState= state.NORMAL;
+    private enum state {
+        NORMAL,
+        TOPRE,
+        TONEXT
+    }
 
     /**
      * 两个控件之间的夹角
@@ -55,15 +66,15 @@ public class StereoView extends ViewGroup {
      * */
     private boolean isCanFling;
 
-    public StereoView(Context context) {
+    public StereoViewContinuous(Context context) {
         this(context, null);
     }
 
-    public StereoView(Context context, AttributeSet attrs) {
+    public StereoViewContinuous(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public StereoView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public StereoViewContinuous(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         minTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();// ViewConfiguration.get(context).getScaledTouchSlop() 用于获取滑动 它获得的是触发移动事件的最短距离
@@ -186,13 +197,23 @@ public class StereoView extends ViewGroup {
                 mVelocityTracker.computeCurrentVelocity(1000);
 
                 float yCurrentSpeed = mVelocityTracker.getYVelocity();
-
-                //抬手时，根据现实的两个子VIew的位置就行 滑动复位
-                int Y = getScrollY() % mHeight;
-                int dy = Y <= mHeight / 2 ? - Y : mHeight - Y;
-                LogUtil.i("NORMAL",getScrollY() + "," + Y + ","+ dy);
-                mScroller.startScroll(0, getScrollY(), 0, dy);
-                invalidate();
+                if( yCurrentSpeed > standardSpeed && getScrollY() % mHeight < mHeight / 2) {
+                    mCurrState = state.TOPRE;
+                    LogUtil.i("TOPRE",getScrollY() + "," + yCurrentSpeed );
+                    toPreAction(yCurrentSpeed);
+                } else if(yCurrentSpeed < -standardSpeed && getScrollY() % mHeight > mHeight / 2) {
+                    mCurrState = state.TONEXT;
+                    LogUtil.i("TONEXT",getScrollY() + "," + yCurrentSpeed );
+                    toNextAction(yCurrentSpeed);
+                } else {
+                    //抬手时，根据现实的两个子VIew的位置就行 滑动复位
+                    mCurrState = state.NORMAL;
+                    int Y = getScrollY() % mHeight;
+                    int dy = Y <= mHeight / 2 ? - Y : mHeight - Y;
+                    LogUtil.i("NORMAL",getScrollY() + "," + Y + ","+ dy);
+                    mScroller.startScroll(0, getScrollY(), 0, dy);
+                    invalidate();
+                }
 
                 if(mVelocityTracker != null) {
                     mVelocityTracker.recycle();
@@ -205,6 +226,30 @@ public class StereoView extends ViewGroup {
         return super.onTouchEvent(event);
     }
 
+    private void toPreAction(float yVelocity) {
+        addPre();
+        int addCount = (int)yVelocity / standardSpeed;//根据滑动的速度决定向下滚动的控件个数
+
+        int duration = viewScrollTime * addCount;
+        int yDistance = -(getScrollY() % mHeight + mHeight * addCount);
+
+        LogUtil.i("toPreAction",addCount + "," + duration + "," + yDistance);
+        mScroller.startScroll(0, getScrollY(), 0, yDistance, duration);
+        invalidate();
+    }
+
+    private void toNextAction(float yVelocity) {
+        addNext();
+        int addCount = (int)(- yVelocity) / standardSpeed;//根据滑动的速度决定向上滚动的控件个数
+
+        int duration = viewScrollTime * addCount;
+        int yDistance = (getScrollY() % mHeight + mHeight * addCount);
+
+        LogUtil.i("toPreAction",addCount + "," + duration + "," + yDistance);
+        mScroller.startScroll(0, getScrollY(), 0, yDistance, duration);
+        invalidate();
+
+    }
 
     private void recycleYMove(float realDelta) {
         int yDelta = (int)realDelta % mHeight;
@@ -239,11 +284,14 @@ public class StereoView extends ViewGroup {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-
-        for (int i = 0; i < getChildCount(); i++) {
-            drawChildScreen(canvas, i , getDrawingTime());
+        if (!isAdding) {
+            for (int i = 0; i < getChildCount(); i++) {
+                drawChildScreen(canvas, i , getDrawingTime());
+            }
+        } else {
+            isAdding = false;
+            super.dispatchDraw(canvas);
         }
-        //super.dispatchDraw(canvas);
 
     }
 
@@ -289,8 +337,24 @@ public class StereoView extends ViewGroup {
     @Override
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
+            if (mCurrState == state.TOPRE) {
+                scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+                if (getScrollY() < mHeight) {
+                    addPre();
+                    isAdding = true;
+                }
+                postInvalidate();
+            } else if (mCurrState == state.TONEXT) {
+                scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+                if (getScrollY() > mHeight) {
+                    addNext();
+                    isAdding = true;
+                }
+                postInvalidate();
+            } else {
                 scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
                 postInvalidate();
+            }
         }
     }
 
