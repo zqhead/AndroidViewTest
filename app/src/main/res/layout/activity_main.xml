@@ -212,6 +212,19 @@
                 app:layout_constraintEnd_toEndOf="@+id/btn_touch_test"
                 app:layout_constraintStart_toStartOf="@+id/btn_touch_test"/>
 
+            <Button
+                android:id="@+id/start_view_test_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="openViewTestOne"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/btn_open_camera_test_one"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline2"/>
+
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>

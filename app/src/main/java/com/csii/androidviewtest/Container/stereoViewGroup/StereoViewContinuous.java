@@ -10,6 +10,8 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
 
 import com.csii.androidviewtest.Util.LogUtil;
@@ -44,7 +46,9 @@ public class StereoViewContinuous extends ViewGroup {
     private int mHeight;
     private int mCurrentItem;
     private VelocityTracker mVelocityTracker;
-    private final int viewScrollTime = 1000;
+    private final int viewScrollTime = 800;
+    private int flingSpeed = 2000;
+    private int alreadyAdd = 0;
 
     private int standardSpeed = 2000;
     private boolean initializeMeasure = false;
@@ -65,6 +69,7 @@ public class StereoViewContinuous extends ViewGroup {
      * 表示touch动作是否被拦截的标识
      * */
     private boolean isCanFling;
+    private int addCount;
 
     public StereoViewContinuous(Context context) {
         this(context, null);
@@ -77,12 +82,12 @@ public class StereoViewContinuous extends ViewGroup {
     public StereoViewContinuous(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        minTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();// ViewConfiguration.get(context).getScaledTouchSlop() 用于获取滑动 它获得的是触发移动事件的最短距离
+        minTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();// ViewConfiguration.get(context).getScaledTouchSlop() 用于获取滑动距离 它获得的是触发移动事件的最短距离
         mMatrix = new Matrix();
         mCamera = new Camera();
-        mScroller = new Scroller(context);
+        mScroller = new Scroller(context, new AccelerateDecelerateInterpolator());
 
-        StartIndex = 1;
+        StartIndex = 0;
         mCurrentItem = 0;
         mAngle = 90;
     }
@@ -145,9 +150,16 @@ public class StereoViewContinuous extends ViewGroup {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 LogUtil.i("111111");
+                isCanFling = false;
                 //记录down动作的坐标
                 mXDown = ev.getX();
                 mYDown = ev.getY();
+                if (!mScroller.isFinished()) {
+                    //当上一次滑动没有结束时，再次点击，强制滑动在点击位置结束
+                    mScroller.setFinalY(mScroller.getCurrY());
+                    mScroller.abortAnimation();
+                    scrollTo(0, getScrollY());
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 LogUtil.i("22222222");
@@ -182,6 +194,7 @@ public class StereoViewContinuous extends ViewGroup {
         mVelocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                //这里返回true，可以让事件能够正确被stereoView接收，即使子view不接受事件
                 return true;
             case MotionEvent.ACTION_MOVE:
                 //计算Y移动方向，然后根据方向，进行滚动
@@ -196,15 +209,27 @@ public class StereoViewContinuous extends ViewGroup {
                 isCanFling = false;
                 mVelocityTracker.computeCurrentVelocity(1000);
 
+                //速度关系，x正表示向右，负表示向左， y正表示向下，复试表示向上
                 float yCurrentSpeed = mVelocityTracker.getYVelocity();
-                if( yCurrentSpeed > standardSpeed && getScrollY() % mHeight < mHeight / 2) {
+                //速度大于标准速度，或者上一个显示的VIew显示的高度大于1/2，则表示向下滚动
+                //if( yCurrentSpeed > standardSpeed || getScrollY() % mHeight < mHeight / 2) {((getScrollY() + mHeight / 2) / mHeight < mStartScreen)
+                /**
+                 * 这里使用startIndex的目的是，让现实的view适中处于StartIndex的位置，
+                 * 例如：
+                 * 如果startIndex为1，则当前现实的子view永远位于队列中1的位置，只要他的位置计算下来不是1，就进行topre或者tonext操作，保证永远是队列中位置为1的子view现实
+                 * 同时startIndex相当于是控制Up操作的判定值
+                 * */
+                if( yCurrentSpeed > standardSpeed || ((getScrollY() + mHeight / 2) / mHeight < StartIndex)) {
                     mCurrState = state.TOPRE;
                     LogUtil.i("TOPRE",getScrollY() + "," + yCurrentSpeed );
-                    toPreAction(yCurrentSpeed);
-                } else if(yCurrentSpeed < -standardSpeed && getScrollY() % mHeight > mHeight / 2) {
+                    //toPreAction(yCurrentSpeed);
+                    toPreAction1(yCurrentSpeed);
+                    //速度小于标准负速度,或者下一个显示的View显示的高度大于1/2，则表示向上滚动
+                } else if(yCurrentSpeed < -standardSpeed || ((getScrollY() + mHeight / 2) / mHeight > StartIndex)) {
                     mCurrState = state.TONEXT;
                     LogUtil.i("TONEXT",getScrollY() + "," + yCurrentSpeed );
-                    toNextAction(yCurrentSpeed);
+                    //toNextAction(yCurrentSpeed);
+                    toNextAction1(yCurrentSpeed);
                 } else {
                     //抬手时，根据现实的两个子VIew的位置就行 滑动复位
                     mCurrState = state.NORMAL;
@@ -215,6 +240,7 @@ public class StereoViewContinuous extends ViewGroup {
                     invalidate();
                 }
 
+                //当MVelocity使用完毕后，要进行回收处理，方便后续使用
                 if(mVelocityTracker != null) {
                     mVelocityTracker.recycle();
                     mVelocityTracker = null;
@@ -226,30 +252,72 @@ public class StereoViewContinuous extends ViewGroup {
         return super.onTouchEvent(event);
     }
 
-    private void toPreAction(float yVelocity) {
-        addPre();
-        int addCount = (int)yVelocity / standardSpeed;//根据滑动的速度决定向下滚动的控件个数
-
-        int duration = viewScrollTime * addCount;
-        int yDistance = -(getScrollY() % mHeight + mHeight * addCount);
-
-        LogUtil.i("toPreAction",addCount + "," + duration + "," + yDistance);
-        mScroller.startScroll(0, getScrollY(), 0, yDistance, duration);
-        invalidate();
+    private void toPreAction1(float yVelocity) {
+        int startY;
+        int delta;
+        int duration;
+        addPre();//增加新的页面
+        //计算松手后滑动的item个数
+        int flingSpeedCount = (yVelocity - standardSpeed) > 0 ? (int) (yVelocity - standardSpeed) : 0;
+        addCount = flingSpeedCount / flingSpeed + 1;
+        //mScroller开始的坐标
+        startY = getScrollY() + mHeight;
+        setScrollY(startY);
+        //mScroller移动的距离
+        delta = -(startY - StartIndex * mHeight) - (addCount - 1) * mHeight;
+        duration = viewScrollTime * addCount;
+        mScroller.startScroll(0, startY, 0, delta, duration);
+        addCount--;
     }
 
-    private void toNextAction(float yVelocity) {
+//    private void toPreAction(float yVelocity) {
+//        addPre();
+////        int flingSpeedCount = (yVelocity - standardSpeed) > 0 ? (int)(yVelocity - standardSpeed) : 0;
+////        addCount = flingSpeedCount / flingSpeed + 1;
+//        addCount = (int)yVelocity / standardSpeed + 1;//根据滑动的速度决定向下滚动的控件个数
+//
+//        int duration = viewScrollTime * addCount + 1;//计算滑动的持续时间
+//        //int startY = getScrollY();
+//        int startY = getScrollY() + mHeight;
+//        setScrollY(startY);
+//        int yDistance = -(startY % mHeight + mHeight * (addCount - 1));//计算滑动的距离
+//
+//        LogUtil.i("toPreAction",addCount + "," + duration + "," + yDistance);
+//        mScroller.startScroll(0, startY, 0, yDistance, duration);
+//        addCount--;
+//        invalidate();
+//    }
+
+    private void toNextAction1(float yVelocity) {
+        int startY;
+        int delta;
+        int duration;
         addNext();
-        int addCount = (int)(- yVelocity) / standardSpeed;//根据滑动的速度决定向上滚动的控件个数
-
-        int duration = viewScrollTime * addCount;
-        int yDistance = (getScrollY() % mHeight + mHeight * addCount);
-
-        LogUtil.i("toPreAction",addCount + "," + duration + "," + yDistance);
-        mScroller.startScroll(0, getScrollY(), 0, yDistance, duration);
-        invalidate();
-
+        int flingSpeedCount = (Math.abs(yVelocity) - standardSpeed) > 0 ? (int) (Math.abs(yVelocity) - standardSpeed) : 0;
+        addCount = flingSpeedCount / flingSpeed + 1;
+        startY = getScrollY() - mHeight;
+        setScrollY(startY);
+        delta = mHeight * StartIndex - startY + (addCount - 1) * mHeight;
+        LogUtil.m("后一页startY " + startY + " yVelocity " + yVelocity + " delta " + delta + "  getScrollY() " + getScrollY() + " addCount " + addCount);
+        duration = viewScrollTime * addCount;
+        mScroller.startScroll(0, startY, 0, delta, duration);
+        addCount--;
     }
+
+//    private void toNextAction(float yVelocity) {
+//        addNext();
+//        addCount = (int)(- yVelocity) / standardSpeed + 1;//根据滑动的速度决定向上滚动的控件个数
+//
+//        int duration = viewScrollTime * addCount;
+//        int startY = getScrollY() - mHeight;
+//        setScrollY(startY);
+//        int yDistance = (mHeight - (startY % mHeight) + mHeight * (addCount - 1));
+//
+//        LogUtil.i("toNextAction",addCount + "," + duration + "," + yDistance);
+//        mScroller.startScroll(0, startY, 0, yDistance, duration);
+//        addCount--;
+//        invalidate();
+//    }
 
     private void recycleYMove(float realDelta) {
         int yDelta = (int)realDelta % mHeight;
@@ -334,29 +402,65 @@ public class StereoViewContinuous extends ViewGroup {
         canvas.restore();
     }
 
-    @Override
-    public void computeScroll() {
+        @Override
+        public void computeScroll() {
+        //滑动没有结束时，进行的操作
         if (mScroller.computeScrollOffset()) {
             if (mCurrState == state.TOPRE) {
-                scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-                if (getScrollY() < mHeight) {
+                scrollTo(mScroller.getCurrX(), mScroller.getCurrY() + mHeight * alreadyAdd);
+                if (getScrollY() < (mHeight + 2) && addCount > 0) {
+                    isAdding = true;
                     addPre();
-                    isAdding = true;
+                    alreadyAdd++;
+                    addCount--;
                 }
-                postInvalidate();
             } else if (mCurrState == state.TONEXT) {
-                scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-                if (getScrollY() > mHeight) {
-                    addNext();
+                scrollTo(mScroller.getCurrX(), mScroller.getCurrY() - mHeight * alreadyAdd);
+                if (getScrollY() > (mHeight) && addCount > 0) {
                     isAdding = true;
+                    addNext();
+                    addCount--;
+                    alreadyAdd++;
                 }
-                postInvalidate();
             } else {
+                //mState == State.Normal状态
                 scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-                postInvalidate();
             }
+            postInvalidate();
+        }
+        //滑动结束时相关用于计数变量复位
+        if (mScroller.isFinished()) {
+            addCount = 0;
+            alreadyAdd = 0;
         }
     }
+
+//    @Override
+//    public void computeScroll() {
+//        if (mScroller.computeScrollOffset()) {
+//            if (mCurrState == state.TOPRE) {
+//                scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+//                if (getScrollY() < mHeight && addCount > 0) {
+//                    addPre();
+//                    isAdding = true;
+//                    addCount--;
+//                }
+//            } else if (mCurrState == state.TONEXT) {
+//                scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+//                if (getScrollY() > mHeight && addCount > 0) {
+//                    addNext();
+//                    isAdding = true;
+//                    addCount--;
+//                }
+//            } else {
+//                scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+//            }
+//            postInvalidate();
+//        }
+//        if (mScroller.isFinished()) {
+//            addCount = 0;
+//        }
+//    }
 
     public void toPre() {
 

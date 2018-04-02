@@ -77,12 +77,14 @@
     </com.csii.androidviewtest.TestAndPractice.container.TestScrollerOne>
 
     <com.csii.androidviewtest.Container.stereoViewGroup.StereoView
+        android:id="@+id/stereoView"
         android:layout_width="242dp"
         android:layout_height="82dp"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="88dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.294"
         app:layout_constraintStart_toEndOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -124,4 +126,34 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="112dp"/>
+
+    <com.csii.androidviewtest.Container.stereoViewGroup.StereoViewContinuous
+        android:layout_width="270dp"
+        android:layout_height="204dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/stereoView">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/lingbo"/>
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/cat"/>
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/linglong"/>
+    </com.csii.androidviewtest.Container.stereoViewGroup.StereoViewContinuous>
 </android.support.constraint.ConstraintLayout>

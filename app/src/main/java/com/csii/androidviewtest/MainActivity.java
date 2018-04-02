@@ -13,9 +13,12 @@ import com.csii.androidviewtest.Activity.MatrixTestThreeActivity;
 import com.csii.androidviewtest.Activity.MatrixTestTwoActivity;
 import com.csii.androidviewtest.Activity.PathMeasureTestActivity;
 import com.csii.androidviewtest.Activity.RegionTestActivity;
+import com.csii.androidviewtest.Activity.TestViewOneActivity;
 import com.csii.androidviewtest.Activity.TouchEventTestActivity;
 import com.csii.androidviewtest.Activity.ViewGroupTestOneActivity;
 import com.csii.androidviewtest.TestAndPractice.TestPathMeasure;
+
+import junit.framework.Test;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button start1;
@@ -32,7 +35,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startTouch1;
     private Button startRegion1;
     private Button startViewGroup1;
-
+    private Button startViewOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startRegion1.setOnClickListener(this);
         startViewGroup1 = (Button)findViewById(R.id.btn_open_viewgroup_test);
         startViewGroup1.setOnClickListener(this);
-
+        startViewOne = (Button)findViewById(R.id.start_view_test_one);
+        startViewOne.setOnClickListener(this);
 
 
     }
@@ -115,6 +119,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.btn_open_viewgroup_test:
                 startActivity(new Intent(MainActivity.this, ViewGroupTestOneActivity.class));
+                break;
+
+            case R.id.start_view_test_one:
+                startActivity(new Intent(MainActivity.this, TestViewOneActivity.class));
                 break;
 
             default:
