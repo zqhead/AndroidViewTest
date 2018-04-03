@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,6 +17,8 @@ import java.util.logging.MemoryHandler;
  */
 
 public class TestSaveLayerOne extends View {
+    private final static int LAYER_FLAG = Canvas.FULL_COLOR_LAYER_SAVE_FLAG;
+
     private Paint mPaint =  new Paint(Paint.ANTI_ALIAS_FLAG);
     private int mHeight;
     private int mWidth;
@@ -43,14 +47,17 @@ public class TestSaveLayerOne extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         //setLayerType(LAYER_TYPE_SOFTWARE, null);
-        canvas.drawColor(0x8F00000F);
+        //canvas.drawColor(0x8F00000F);
         canvas.drawRect(0, 0, 400, 400, mPaint);
-        //canvas.save(Canvas.MATRIX_SAVE_FLAG);
-        int layer = canvas.saveLayer(0, 0 , mWidth, mHeight, mPaint, Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
+
+        canvas.saveLayerAlpha(100, 100 , 300, 300, 128, Canvas.ALL_SAVE_FLAG);
         mPaint.setColor(Color.BLUE);
+        //mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
         canvas.drawCircle(200, 200, 100, mPaint);
+        canvas.scale(0.5f, 0.5f);
         canvas.restore();
         mPaint.setColor(Color.YELLOW);
-        canvas.drawRect(300, 300, 400, 400, mPaint);
+        canvas.drawRect(300, 300, 500, 500, mPaint);
+        //canvas.restore();
     }
 }

@@ -18,7 +18,6 @@ import com.csii.androidviewtest.Activity.TouchEventTestActivity;
 import com.csii.androidviewtest.Activity.ViewGroupTestOneActivity;
 import com.csii.androidviewtest.TestAndPractice.TestPathMeasure;
 
-import junit.framework.Test;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button start1;
