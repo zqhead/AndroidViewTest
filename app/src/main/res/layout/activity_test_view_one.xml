@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.csii.androidviewtest.Activity.TestViewOneActivity">
-
-    <com.csii.androidviewtest.TestAndPractice.TestViewOperation
-        android:id="@+id/testViewOperation"
-        android:layout_width="175dp"
-        android:layout_height="241dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context="com.csii.androidviewtest.Activity.TestViewOneActivity">
 
     <com.csii.androidviewtest.TestAndPractice.XferModeAndShader.TestSaveLayerOne
         android:id="@+id/testSaveLayerOne"
-        android:layout_width="350dp"
-        android:layout_height="279dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/testViewOperation"
+        android:layout_width="273dp"
+        android:layout_height="247dp"
+        android:layout_marginStart="208dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.csii.androidviewtest.TestAndPractice.container.TestRoundRectImageContainer
+        android:layout_width="253dp"
+        android:layout_height="228dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/linglong"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp"/>
+    </com.csii.androidviewtest.TestAndPractice.container.TestRoundRectImageContainer>
 
     <com.csii.androidviewtest.TestAndPractice.XferModeAndShader.TestPorterDuffOne
         android:id="@+id/testPorterDuffOne"
-        android:layout_width="313dp"
-        android:layout_height="443dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="209dp"
+        android:layout_height="226dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testViewOperation"/>
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.csii.androidviewtest.TestAndPractice.XferModeAndShader.RCImageView
+        android:id="@+id/RCImageView"
+        android:layout_width="216dp"
+        android:layout_height="187dp"
+        android:layout_marginBottom="124dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/linglong"
+        />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -41,8 +42,10 @@ public class TestPorterDuffOne extends View {
             PorterDuff.Mode.OVERLAY
 
     };
+    private Bitmap dstBitmap;
+    private Bitmap srcBitmap;
 
-    private PorterDuffXfermode mXfermode = new PorterDuffXfermode(modes[1]);
+    private PorterDuffXfermode mXfermode = new PorterDuffXfermode(modes[5]);
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public TestPorterDuffOne(Context context) {
@@ -59,9 +62,12 @@ public class TestPorterDuffOne extends View {
     }
 
     private void init() {
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        setLayerType(LAYER_TYPE_SOFTWARE, null); //使用非硬件加速也是一种制造缓冲的方法
         mPaint.setColor(Color.BLUE);
         mPaint.setStyle(Paint.Style.FILL);
+
+        dstBitmap = creatDstBmp();
+        srcBitmap = creatSrcBmp();
 
     }
 
@@ -75,17 +81,39 @@ public class TestPorterDuffOne extends View {
 
         canvas.drawColor(0x8000000F);
 
-        //使用saveLayer 来制造隔离缓冲，实现最好的效果
-        canvas.saveLayer(new RectF(0, 0, getWidth(), getHeight()), mPaint);
+        //使用saveLayer 来制造隔离缓冲，是的dst和src除目标范围其他都是透明 去除不必要干扰
+       // canvas.saveLayer(new RectF(0, 0, getWidth(), getHeight()), mPaint);
 
+        mPaint.setColor(Color.BLUE);
         canvas.drawCircle(200, 200, 100, mPaint);
         mPaint.setColor(Color.RED);
         mPaint.setXfermode(mXfermode);
         canvas.drawCircle(300, 300, 100, mPaint);
         mPaint.setXfermode(null);
 
+//        canvas.drawBitmap(dstBitmap, new Matrix(), mPaint);
+//        mPaint.setXfermode(mXfermode);
+//        canvas.drawBitmap(srcBitmap, new Matrix(), mPaint);
+//        mPaint.setXfermode(null);
+
         canvas.restore();
         LogUtil.i(1);
         //super.onDraw(canvas);
+    }
+
+    private Bitmap creatDstBmp() {
+        Bitmap bmp = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        mPaint.setColor(Color.BLUE);
+        canvas.drawCircle(200, 200, 100, mPaint);
+        return bmp;
+    }
+
+    private Bitmap creatSrcBmp() {
+        Bitmap bmp = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        mPaint.setColor(Color.RED);
+        canvas.drawCircle(300, 300, 100, mPaint);
+        return bmp;
     }
 }

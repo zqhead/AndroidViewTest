@@ -13,6 +13,7 @@ import com.csii.androidviewtest.Activity.MatrixTestThreeActivity;
 import com.csii.androidviewtest.Activity.MatrixTestTwoActivity;
 import com.csii.androidviewtest.Activity.PathMeasureTestActivity;
 import com.csii.androidviewtest.Activity.RegionTestActivity;
+import com.csii.androidviewtest.Activity.TestGuaGuaKaActivity;
 import com.csii.androidviewtest.Activity.TestViewOneActivity;
 import com.csii.androidviewtest.Activity.TouchEventTestActivity;
 import com.csii.androidviewtest.Activity.ViewGroupTestOneActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startRegion1;
     private Button startViewGroup1;
     private Button startViewOne;
+    private Button startGuaGuaKa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startViewGroup1.setOnClickListener(this);
         startViewOne = (Button)findViewById(R.id.start_view_test_one);
         startViewOne.setOnClickListener(this);
+        startGuaGuaKa = (Button)findViewById(R.id.start_gua_gua_ka);
+        startGuaGuaKa.setOnClickListener(this);
+
 
 
     }
@@ -123,6 +128,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.start_view_test_one:
                 startActivity(new Intent(MainActivity.this, TestViewOneActivity.class));
                 break;
+            case R.id.start_gua_gua_ka:
+                startActivity(new Intent(MainActivity.this, TestGuaGuaKaActivity.class));
+                break;
+
 
             default:
                 break;
