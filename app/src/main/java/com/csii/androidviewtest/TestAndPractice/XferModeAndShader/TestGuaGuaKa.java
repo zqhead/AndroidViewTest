@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.csii.androidviewtest.R;
+import com.csii.androidviewtest.Util.DimensionUtil;
 
 /**
  * Created by zqhead on 2018/4/4.
@@ -45,7 +46,7 @@ public class TestGuaGuaKa extends View {
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(20);
+        mPaint.setStrokeWidth(DimensionUtil.dip2px(getContext(), 20));
         mPaint.setColor(Color.GREEN);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
 
@@ -65,16 +66,20 @@ public class TestGuaGuaKa extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(bkgBitmap, 0, 0, mPaint);
 
+        canvas.drawBitmap(bkgBitmap, 0, 0, mPaint);
         canvas.saveLayer(0, 0, mWidth, mHeight, mPaint);
 
 
+        //这里使用drawbitmap或者使用drawcolor都可以，但是必须在drawpath后面加上setxFermode（null）
         canvas.drawBitmap(layerBitmap, 0, 0, mPaint);
+        //canvas.drawColor(Color.GRAY);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         canvas.drawPath(mPath, mPaint);
+        mPaint.setXfermode(null);//这里必须加上这个，不然效果出不来，具体原因还要进一步研究
 
         canvas.restore();
+
     }
 
 
