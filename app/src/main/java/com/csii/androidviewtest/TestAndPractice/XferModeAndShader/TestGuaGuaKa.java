@@ -57,6 +57,8 @@ public class TestGuaGuaKa extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
+        //这里使用另一种方式来创建一个bitmap
         layerBitmap = Bitmap.createBitmap(w, h , Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(layerBitmap);
         mHeight = h;
@@ -76,7 +78,7 @@ public class TestGuaGuaKa extends View {
         //canvas.drawColor(Color.GRAY);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         canvas.drawPath(mPath, mPaint);
-        mPaint.setXfermode(null);//这里必须加上这个，不然效果出不来，具体原因还要进一步研究
+        mPaint.setXfermode(null);//这里必须加上这个，不然效果出不来，具体原因还要进一步研究（判断应该是如果不及时将Xfermode置空，会影响重绘时候的效果// ）
 
         canvas.restore();
 
