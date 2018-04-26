@@ -82,7 +82,7 @@ public class TestPorterDuffOne extends View {
         canvas.drawColor(0x8000000F);
 
         //使用saveLayer 来制造隔离缓冲，是的dst和src除目标范围其他都是透明 去除不必要干扰
-       // canvas.saveLayer(new RectF(0, 0, getWidth(), getHeight()), mPaint);
+       canvas.saveLayer(new RectF(0, 0, getWidth(), getHeight()), mPaint);
 
         mPaint.setColor(Color.BLUE);
         canvas.drawCircle(200, 200, 100, mPaint);

@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class LogUtil {
     /**
-     * Log工具类 用于调试时使用，更具lEVEl等级打印需要日志，方便使用
+     * Log工具类 用于调试时使用，根据lEVEl等级打印需要日志，方便使用
      *
      * */
     private final static String TAG = "androidViewTest";

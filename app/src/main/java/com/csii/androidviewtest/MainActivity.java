@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.csii.androidviewtest.Activity.BezierTestWaveOneActivity;
 import com.csii.androidviewtest.Activity.BezierTestWaveTwoActivity;
 import com.csii.androidviewtest.Activity.CameraTestOneActivity;
+import com.csii.androidviewtest.Activity.DrawableTestOneActivity;
 import com.csii.androidviewtest.Activity.MatrixTestOneActivity;
 import com.csii.androidviewtest.Activity.MatrixTestThreeActivity;
 import com.csii.androidviewtest.Activity.MatrixTestTwoActivity;
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startViewGroup1;
     private Button startViewOne;
     private Button startGuaGuaKa;
+    private Button startDrawable1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startViewOne.setOnClickListener(this);
         startGuaGuaKa = (Button)findViewById(R.id.start_gua_gua_ka);
         startGuaGuaKa.setOnClickListener(this);
+        startDrawable1 = (Button)findViewById(R.id.btn_drawable_test_one);
+        startDrawable1.setOnClickListener(this);
 
 
 
@@ -130,6 +134,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.start_gua_gua_ka:
                 startActivity(new Intent(MainActivity.this, TestGuaGuaKaActivity.class));
+                break;
+            case  R.id.btn_drawable_test_one:
+                startActivity(new Intent(MainActivity.this, DrawableTestOneActivity.class));
                 break;
 
 

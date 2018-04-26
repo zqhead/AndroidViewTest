@@ -236,6 +236,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_start_region_test"/>
 
+            <Button
+                android:id="@+id/btn_drawable_test_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="openDrawableTestOne"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_start_region_test"/>
+
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>
