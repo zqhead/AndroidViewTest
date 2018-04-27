@@ -63,7 +63,7 @@ public class TestDrawableOne extends View {
         //获取一个drawable实例
         mDrawable = mContext.getResources().getDrawable(R.drawable.linglong);
         //设置drawable的边界
-        mDrawable.setBounds(0, 0, imageWidth, imageHeight);
+        mDrawable.setBounds(0, 0, mViewWidth, mViewHeight);
         //将图片绘制到canvas上
         mDrawable.draw(canvas);
 

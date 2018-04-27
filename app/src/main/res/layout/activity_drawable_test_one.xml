@@ -9,11 +9,25 @@
     tools:context="com.csii.androidviewtest.Activity.DrawableTestOneActivity">
 
     <com.csii.androidviewtest.TestAndPractice.TestDrawableOne
-        android:id="@+id/testDrawableOne"
-        android:layout_width="360dp"
-        android:layout_height="0dp"
+        android:id="@+id/drawable_test_one"
+        android:layout_width="138dp"
+        android:layout_height="122dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <Button
+        android:id="@+id/start_xml_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="16dp"
+        android:text="startXmlAnimation"
+        android:textAllCaps="false"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>
