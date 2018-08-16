@@ -248,6 +248,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_start_region_test"/>
 
+            <Button
+                android:id="@+id/btn_open_gl_test_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="OpenGlTestViewOne"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_drawable_test_one"
+                app:layout_constraintTop_toBottomOf="@+id/start_gua_gua_ka"/>
+
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>

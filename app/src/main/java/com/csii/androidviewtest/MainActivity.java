@@ -12,6 +12,7 @@ import com.csii.androidviewtest.Activity.DrawableTestOneActivity;
 import com.csii.androidviewtest.Activity.MatrixTestOneActivity;
 import com.csii.androidviewtest.Activity.MatrixTestThreeActivity;
 import com.csii.androidviewtest.Activity.MatrixTestTwoActivity;
+import com.csii.androidviewtest.Activity.Opengles2TestOneActivity;
 import com.csii.androidviewtest.Activity.PathMeasureTestActivity;
 import com.csii.androidviewtest.Activity.RegionTestActivity;
 import com.csii.androidviewtest.Activity.TestGuaGuaKaActivity;
@@ -39,6 +40,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startViewOne;
     private Button startGuaGuaKa;
     private Button startDrawable1;
+    private Button startGlSurfaceView1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startGuaGuaKa.setOnClickListener(this);
         startDrawable1 = (Button)findViewById(R.id.btn_drawable_test_one);
         startDrawable1.setOnClickListener(this);
+        startGlSurfaceView1 = (Button)findViewById(R.id.btn_open_gl_test_1);
+        startGlSurfaceView1.setOnClickListener(this);
 
 
 
@@ -137,6 +142,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case  R.id.btn_drawable_test_one:
                 startActivity(new Intent(MainActivity.this, DrawableTestOneActivity.class));
+                break;
+            case  R.id.btn_open_gl_test_1:
+                startActivity(new Intent(MainActivity.this, Opengles2TestOneActivity.class));
                 break;
 
 
