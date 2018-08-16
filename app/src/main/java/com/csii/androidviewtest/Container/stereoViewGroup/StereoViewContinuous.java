@@ -400,6 +400,7 @@ public class StereoViewContinuous extends ViewGroup {
         canvas.concat(mMatrix);
         drawChild(canvas, getChildAt(i), drawingTime);
         canvas.restore();
+
     }
 
         @Override
