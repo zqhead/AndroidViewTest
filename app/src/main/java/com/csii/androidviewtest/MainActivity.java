@@ -9,6 +9,7 @@ import com.csii.androidviewtest.Activity.BezierTestWaveOneActivity;
 import com.csii.androidviewtest.Activity.BezierTestWaveTwoActivity;
 import com.csii.androidviewtest.Activity.CameraTestOneActivity;
 import com.csii.androidviewtest.Activity.DrawableTestOneActivity;
+import com.csii.androidviewtest.Activity.FingerPrintTestActivity;
 import com.csii.androidviewtest.Activity.MatrixTestOneActivity;
 import com.csii.androidviewtest.Activity.MatrixTestThreeActivity;
 import com.csii.androidviewtest.Activity.MatrixTestTwoActivity;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button startGuaGuaKa;
     private Button startDrawable1;
     private Button startGlSurfaceView1;
+    private Button startFingerPrint;
 
 
     @Override
@@ -83,8 +85,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startDrawable1.setOnClickListener(this);
         startGlSurfaceView1 = (Button)findViewById(R.id.btn_open_gl_test_1);
         startGlSurfaceView1.setOnClickListener(this);
-
-
+        startFingerPrint = (Button)findViewById(R.id.btn_fingerprint_test);
+        startFingerPrint.setOnClickListener(this);
 
     }
 
@@ -145,6 +147,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case  R.id.btn_open_gl_test_1:
                 startActivity(new Intent(MainActivity.this, Opengles2TestOneActivity.class));
+                break;
+            case  R.id.btn_fingerprint_test:
+                startActivity(new Intent(MainActivity.this, FingerPrintTestActivity.class));
                 break;
 
 

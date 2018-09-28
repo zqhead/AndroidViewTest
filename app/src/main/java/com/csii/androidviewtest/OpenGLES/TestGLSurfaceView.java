@@ -9,11 +9,20 @@ import android.util.AttributeSet;
  */
 
 public class TestGLSurfaceView extends GLSurfaceView {
+
+    private myRenderer renderer;
+
     public TestGLSurfaceView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public TestGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
+    }
+
+    private void init(Context context){
+        renderer = new myRenderer();
+        this.setRenderer(renderer);
     }
 }
