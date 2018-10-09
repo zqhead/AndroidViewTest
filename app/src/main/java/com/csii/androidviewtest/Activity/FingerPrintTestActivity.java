@@ -16,6 +16,7 @@ import com.csii.androidviewtest.R;
 import com.csii.androidviewtest.Util.ToastUtil;
 
 public class FingerPrintTestActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "FingerPrintTestActivity";
     FingerprintManagerCompat fingerprintManager;
     AlertDialog dialog;
     @Override
@@ -23,17 +24,28 @@ public class FingerPrintTestActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finger_print_test);
 
-        fingerprintManager = FingerprintManagerCompat.from(this);
+        fingerprintManager = getFingerprintManager(this);
         Button button = (Button) findViewById(R.id.btn_start_fingerprint);
         button.setOnClickListener(this);
 
+    }
+
+    private FingerprintManagerCompat getFingerprintManager(Context context){
+        FingerprintManagerCompat fingerprintManagerCompat = null;
+        try {
+            fingerprintManagerCompat = FingerprintManagerCompat.from(this);
+        }catch (Error error){
+            Log.e(TAG, "getFingerprintManager: " + error);
+        }
+
+        return fingerprintManagerCompat;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start_fingerprint:
-                if (!fingerprintManager.isHardwareDetected()) {
+                if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
                     ToastUtil.showInfo(this, "本设备不支持指纹验证");
                     return;
                 }
@@ -49,6 +61,7 @@ public class FingerPrintTestActivity extends AppCompatActivity implements View.O
                             FingerPrintTestActivity.this.dialog.dismiss();
                         }
                     });
+
                     dialog = builder.show();
 
                     fingerprintManager.authenticate(null, 0, null, new fingerCallBack(), null);
@@ -69,7 +82,7 @@ public class FingerPrintTestActivity extends AppCompatActivity implements View.O
         public void onAuthenticationError(int errMsgId, CharSequence errString) {
             ToastUtil.showInfo(FingerPrintTestActivity.this, errString.toString());
             Log.d(TAG, "onAuthenticationError: " + errString);
-            dialog.dismiss();
+            //dialog.dismiss();
             //super.onAuthenticationError(errMsgId, errString);
         }
 
@@ -77,7 +90,7 @@ public class FingerPrintTestActivity extends AppCompatActivity implements View.O
         public void onAuthenticationFailed() {
             ToastUtil.showInfo(FingerPrintTestActivity.this, "验证失败");
             Log.d(TAG, "onAuthenticationFailed: " + "验证失败");
-            dialog.dismiss();
+            //dialog.dismiss();
             //super.onAuthenticationFailed();
         }
 
@@ -85,7 +98,7 @@ public class FingerPrintTestActivity extends AppCompatActivity implements View.O
         public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
             ToastUtil.showInfo(FingerPrintTestActivity.this, helpString.toString());
             Log.d(TAG, "onAuthenticationHelp: " +  helpString);
-            dialog.dismiss();
+            //dialog.dismiss();
             //super.onAuthenticationHelp(helpMsgId, helpString);
         }
 
